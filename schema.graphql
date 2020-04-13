@@ -1,0 +1,122 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+}
+
+type Collection {
+    id: Float
+    name: String
+}
+
+type Episodes {
+    episode: Float
+    iframe_url: String
+}
+
+type LastUpdate {
+    items: [LastUpdateItems!]
+}
+
+type LastUpdateItems {
+    availability: String
+    episode: Float
+    id: Float
+    imdb: String
+    imdb_id: String
+    kinopoisk: String
+    kinopoisk_id: String
+    name: String
+    origin_name: String
+    poster: String
+    release_world: String
+    season: Float
+    type: String
+}
+
+type Movie {
+    activate_time: String
+    id: Float
+    iframe_url: String
+    imdb: String
+    imdb_id: String
+    kinopoisk: String
+    kinopoisk_id: String
+    name: String
+    origin_name: String
+    poster: String
+    quality: String
+    seasons: [Seasons!]
+    trailer: String
+    type: String
+    year: Float
+}
+
+type MovieInfo {
+    activate_time: String
+    actors: [String!]
+    backdrop_path: String
+    country: [String!]
+    description: String
+    director: [String!]
+    genre: [String!]
+    id: Float
+    iframe_url: String
+    imdb: String
+    imdb_id: String
+    kinopoisk: String
+    kinopoisk_id: String
+    name: String
+    name_eng: String
+    poster: String
+    premier: String
+    quality: String
+    time: String
+    trailers: [Trailers!]
+    year: Float
+}
+
+type Movies {
+    next_page: String
+    prev_page: String
+    results: [Movie!]
+    total: Int!
+}
+
+type NowPlaying {
+    backdrop_path: String
+    id: Float
+    original_title: String
+    poster_path: String
+}
+
+type Query {
+    anime(genre_id: Float!, page: Float!, year: Float!): Movies!
+    animeSerials(genre_id: Float!, page: Float!, year: Float!): Movies!
+    cartoon(genre_id: Float!, page: Float!, year: Float!): Movies!
+    cartoonSerials(genre_id: Float!, page: Float!, year: Float!): Movies!
+    collection: [Collection!]!
+    getCollections(id: Float!): Movies!
+    lastUpdate: LastUpdate!
+    listForCarousel: Movies!
+    movieInfo(id: Float!): MovieInfo!
+    movies(genre_id: Float!, page: Float!, year: Float!): Movies!
+    nowPlaying: [NowPlaying!]!
+    search(title: String!): Movies!
+    serials(genre_id: Float!, page: Float!, year: Float!): Movies!
+    show(genre_id: Float!, page: Float!, year: Float!): Movies!
+}
+
+type Seasons {
+    episodes: [Episodes!]
+    iframe_url: String
+    poster: String
+    season: Float
+}
+
+type Trailers {
+    iframe_url: String
+    name: String
+    number: Int
+    season: Float
+}
