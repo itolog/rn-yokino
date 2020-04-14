@@ -102,12 +102,14 @@ const InfiniteList: React.FC<Props> = React.memo(
     );
 
     const toUpp = () => {
-      if (flatRef.current) {
-        flatRef.current.scrollToOffset({
-          animated: true,
-          offset: 1,
-        });
-      }
+      requestAnimationFrame(() => {
+        if (flatRef.current) {
+          flatRef.current.scrollToOffset({
+            animated: true,
+            offset: 1,
+          });
+        }
+      });
     };
 
     if (dataMovie.length === 0) {
@@ -136,7 +138,7 @@ const InfiniteList: React.FC<Props> = React.memo(
           data={data}
           getItemLayout={getItemLayout}
           renderItem={renderItem}
-          keyExtractor={(item: any) => item.id}
+          keyExtractor={(item: any) => item.id.toString()}
           onRefresh={onReloadScreen}
           refreshing={refreshing}
           numColumns={1}

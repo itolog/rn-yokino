@@ -3,6 +3,8 @@ import { StyleSheet, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar, Card, Icon } from 'react-native-elements';
 
+import uniqBy from 'lodash.uniqby';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
@@ -88,7 +90,10 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
       if (nextPage === 1) {
         setMovieList(mediaData?.results);
       } else {
-        setMovieList([...movieList, ...mediaData?.results]);
+        const movies = [...movieList, ...mediaData?.results];
+        // GET UNIQ movie form API ,some times DATA contain non uniq items
+        const newMovieData = uniqBy(movies, 'id');
+        setMovieList(newMovieData);
       }
     }
   }, [mediaData]);
@@ -129,7 +134,6 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
   };
 
   const setYear = (item: number) => {
-    console.log(item);
     setMovieYear(item);
     setNextPage(1);
   };
