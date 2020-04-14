@@ -57,7 +57,7 @@ class DbService {
     );
   }
 
-  static remove(dbName: string, id: string): Promise<string> {
+  static remove(dbName: string, id: number): Promise<number> {
     return new Promise((resolve, reject) =>
       db.transaction((tx: Transaction) => {
         return tx.executeSql(

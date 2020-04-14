@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar, Card, Icon } from 'react-native-elements';
 
@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 10,
   },
+  searchContainer: {
+    // backgroundColor: COLORS.MAIN_COLOR,
+  },
 });
 
 interface Props {
@@ -52,6 +55,7 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
   // LOCAL STATE
   const initialYear = new Date().getFullYear();
   const [nextPage, setNextPage] = useState(1);
+  const [preferences, setPreferences] = useState(false);
   const [movieYear, setMovieYear] = useState(initialYear);
   const [movieList, setMovieList] = useState<Movie[]>([]);
   const [search, setSearch] = useState('');
@@ -155,19 +159,41 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
     }
   };
 
+  const togglePreferences = () => {
+    requestAnimationFrame(() => {
+      setPreferences(!preferences);
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <BgImage>
-        <HeaderAnimView>
-          <SearchBar
-            placeholder='поиск ...'
-            onChangeText={updateSearch}
-            value={search}
-            round={true}
-            onSubmitEditing={onSubmit}
+        <View>
+          <Icon
+            containerStyle={styles.searchContainer}
+            reverse
+            name='search'
+            type='font-awesome'
+            color='#f50'
+            size={25}
+            onPress={togglePreferences}
           />
-          <YearPicker movieYear={movieYear} setMovieYear={setYear} />
-        </HeaderAnimView>
+
+          {preferences ? (
+            <View>
+              <HeaderAnimView>
+                <SearchBar
+                  placeholder='поиск ...'
+                  onChangeText={updateSearch}
+                  value={search}
+                  round={true}
+                  onSubmitEditing={onSubmit}
+                />
+                <YearPicker movieYear={movieYear} setMovieYear={setYear} />
+              </HeaderAnimView>
+            </View>
+          ) : null}
+        </View>
 
         <InfiniteList
           refresh={refreshMovieList}

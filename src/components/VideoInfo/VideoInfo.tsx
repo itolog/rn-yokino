@@ -65,10 +65,11 @@ const VideoInfo: React.FC<Props> = ({
   }, [favoriteMoviesIds, data]);
 
   const addFavorites = async () => {
-    if (data.name && data.id) {
+    if (data.name && data.id && data.poster) {
       const payload = {
         title: data.name,
-        id_movie: data.id,
+        id: data.id,
+        poster: data.poster,
       };
       await saveMovie(payload);
     }

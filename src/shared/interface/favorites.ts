@@ -1,5 +1,6 @@
 export interface Favorites {
-  id_movie: number;
+  id: number;
+  poster: string;
   title: string;
   kp_id?: string;
 }

@@ -8,13 +8,10 @@ import {
   TextInputScrollEventData,
 } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { Actions } from '../../../store/animation/actions';
 import MovieCard from '../MovieCard/MovieCard';
 import { Movie } from '../../generated/graphql';
 import { THEMES } from '../../constants/themes';
-import { AppState } from '../../../store/createStore';
 
 interface Props {
   data: Movie[] | [];
@@ -28,7 +25,7 @@ interface Props {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingTop: THEMES.HEADER_SIZE,
+    // paddingTop: THEMES.HEADER_SIZE,
   },
   colStyle: {
     justifyContent: 'center',
@@ -46,12 +43,9 @@ const styles = StyleSheet.create({
 
 const InfiniteList: React.FC<Props> = React.memo(
   ({ data, loading, refresh, loadMore, year, nextPageUrl }) => {
-    const dispatch = useDispatch();
-    const isHide = useSelector(
-      (state: AppState) => state.animState.isHeaderVisible,
-    );
     const flatRef = useRef<FlatList<any>>(null);
     const [dataMovie, setDataMovie] = useState(data);
+    const [isArrowUppVisible, setIsArrowUppVisible] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
@@ -85,20 +79,20 @@ const InfiniteList: React.FC<Props> = React.memo(
 
     useEffect(() => {
       return () => {
-        dispatch(Actions.headerShow());
+        setIsArrowUppVisible(false);
       };
-    }, [dispatch]);
+    }, [setIsArrowUppVisible]);
 
     const handleScroll = useCallback(
       (e: NativeSyntheticEvent<TextInputScrollEventData>) => {
         const offsetY = e.nativeEvent.contentOffset.y;
         if (offsetY > THEMES.HEADER_SIZE / 3) {
-          dispatch(Actions.headerHide());
+          setIsArrowUppVisible(true);
         } else {
-          dispatch(Actions.headerShow());
+          setIsArrowUppVisible(false);
         }
       },
-      [dispatch],
+      [setIsArrowUppVisible],
     );
 
     const toUpp = () => {
@@ -150,7 +144,7 @@ const InfiniteList: React.FC<Props> = React.memo(
           onEndReachedThreshold={4}
           // columnWrapperStyle={styles.colStyle}
         />
-        {!isHide && (
+        {isArrowUppVisible && (
           <Icon
             containerStyle={styles.iconContainer}
             raised

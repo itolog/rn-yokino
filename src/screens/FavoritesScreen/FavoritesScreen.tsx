@@ -16,7 +16,7 @@ import {
   getFavoritesMovies,
   getErrorFavorites,
 } from '../../store/favorites-movies/selectors';
-import posterUrl from '../../shared/utils/posterUrl';
+
 import BgImage from '../../shared/components/BgImage/BgImage';
 
 const mapStateToProps = (state: AppState) => {
@@ -42,7 +42,6 @@ const FavoritesScreen = ({
   const navigation = useNavigation();
   useEffect(() => {
     loadDB();
-    console.log(favorites)
   }, [favorites, loadDB]);
 
   const emptyList = () => {
@@ -61,17 +60,17 @@ const FavoritesScreen = ({
 
   const renderItem = ({ item }: any) => {
     return (
-      <Card title={item.name} image={{ uri: posterUrl(item.id) }}>
+      <Card title={item.name} image={{ uri: item.poster }}>
         <View style={styles.btns}>
           <Button
             icon={<Icon name='delete' color='#ffffff' />}
             buttonStyle={styles.delete}
-            onPress={() => removeItems(item.id_movie)}
+            onPress={() => removeItems(item.id)}
           />
           <Button
             icon={<Icon name='eye' color='#ffffff' type='font-awesome' />}
             buttonStyle={styles.see}
-            onPress={() => toDetails(item.id_movie)}
+            onPress={() => toDetails(item.id)}
           />
         </View>
       </Card>
@@ -91,7 +90,7 @@ const FavoritesScreen = ({
           style={styles.flatList}
           data={favorites}
           renderItem={renderItem}
-          keyExtractor={(item: any) => item.kp_id}
+          keyExtractor={(item: any) => item.id.toString()}
           numColumns={1}
           removeClippedSubviews={true}
           maxToRenderPerBatch={8}

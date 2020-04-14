@@ -7,18 +7,18 @@ class DbFavoritesService {
   static createFavoriteDb() {
     return DbService.createDB(
       'favorites',
-      'id integer primary key not null, title text not null, id_movie text not null',
+      'id integer not null, title text not null, poster text not null',
     );
   }
 
-  static saveFavorites({ title, id_movie }: Favorites) {
+  static saveFavorites({ id, title, poster }: Favorites) {
     return from(
-      DbService.save<Favorites>('favorites', { title, id_movie }),
+      DbService.save<Favorites>('favorites', { id, title, poster }),
     );
   }
 
-  static removeFavorites(id_movie: string): Observable<string> {
-    return from(DbService.remove('favorites', id_movie));
+  static removeFavorites(id: number): Observable<number> {
+    return from(DbService.remove('favorites', id));
   }
 
   static getFavorites(): Observable<Favorites[]> {

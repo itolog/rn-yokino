@@ -15,7 +15,7 @@ export function reducer(
     case ActionTypes.SAVE_FAVORITE_MOVIE_SUCCESS: {
       return {
         ...state,
-        ids: [...state.ids, action.payload.id_movie],
+        ids: [...state.ids, action.payload.id],
         movies: [...state.movies, action.payload],
       };
     }
@@ -26,10 +26,8 @@ export function reducer(
       };
     }
     case ActionTypes.REMOVE_FAVORITE_MOVIE_SUCCESS: {
-      const movies = state.movies.filter(
-        item => item.id_movie !== action.payload,
-      );
-      const ids = movies.map(i => i.id_movie);
+      const movies = state.movies.filter(item => item.id !== action.payload);
+      const ids = movies.map(i => i.id);
       return {
         ...state,
         ids,
@@ -43,7 +41,7 @@ export function reducer(
       };
     }
     case ActionTypes.LOAD_FAVORITE_MOVIE_SUCCESS: {
-      const ids = action.payload.map(item => item.id_movie);
+      const ids = action.payload.map(item => item.id);
       return {
         ...state,
         ids,
