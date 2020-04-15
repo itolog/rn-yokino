@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Animated, Easing } from 'react-native';
+import { Animated, Dimensions, Easing } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../store/createStore';
 
@@ -57,9 +57,10 @@ const HeaderAnimView: React.FC<Props> = React.memo(({ children }) => {
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 3,
+        zIndex: 30,
         opacity: fadeAnim,
-        height,
+        backgroundColor: THEMES.PREFERENCE_BG,
+        height: Dimensions.get('window').height,
         transform: [
           {
             translateY: fadeAnim.interpolate({

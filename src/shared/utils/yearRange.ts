@@ -8,7 +8,10 @@ function generateYearRange(start: number, end: number) {
 
 export function yearDataRange() {
   const currentYear = new Date().getFullYear();
-  const data = generateYearRange(1970, currentYear);
-
-  return data.map((item: number) => ({ value: item, label: item })).reverse();
+  const data = generateYearRange(
+    1970,
+    currentYear,
+  ).map((item: number | string) => ({ value: item, label: item }));
+  data.push({ value: 0, label: 'год' });
+  return data.reverse();
 }

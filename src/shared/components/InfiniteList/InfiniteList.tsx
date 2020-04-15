@@ -73,6 +73,9 @@ const InfiniteList: React.FC<Props> = React.memo(
           year={item.year!}
           title={item.name!}
           poster={item.poster!}
+          kp={item.kinopoisk!}
+          imdb={item.imdb!}
+          quality={item.quality!}
         />
       );
     };

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { SearchBar, Card, Icon } from 'react-native-elements';
+import { SearchBar, Card, Icon, Button } from 'react-native-elements';
 
 import uniqBy from 'lodash.uniqby';
 
@@ -18,32 +18,11 @@ import { MediaTypes } from '../../types/mediaTypes';
 
 import { Movie, Movies } from '../../generated/graphql';
 import YearPicker from '../../../components/YearPicker/YearPicker';
-import { COLORS } from '../../constants/colors';
+import GenrePicker from '../../../components/GenrePicker/GenrePicker';
 import BgImage from '../BgImage/BgImage';
 import HeaderAnimView from '../../animation/HeaderAnimView';
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    backgroundColor: COLORS.MAIN_COLOR,
-  },
-  bgImg: {
-    width: '100%',
-    height: '100%',
-  },
-  noConnect: {
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  noConnectText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginTop: 10,
-  },
-  searchContainer: {
-    // backgroundColor: COLORS.MAIN_COLOR,
-  },
-});
+import styles from './styles';
 
 interface Props {
   ggl: DocumentNode;
@@ -53,10 +32,11 @@ interface Props {
 const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
   const navigation = useNavigation();
   // LOCAL STATE
-  const initialYear = new Date().getFullYear();
+
   const [nextPage, setNextPage] = useState(1);
   const [preferences, setPreferences] = useState(false);
-  const [movieYear, setMovieYear] = useState(initialYear);
+  const [movieYear, setMovieYear] = useState(0);
+  const [movieGenre, setMovieGenre] = useState(0);
   const [movieList, setMovieList] = useState<Movie[]>([]);
   const [search, setSearch] = useState('');
   const [netInfoState, setNetInfo] = useState<NetInfoState>();
@@ -65,7 +45,7 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
     variables: {
       page: nextPage,
       year: movieYear,
-      genre_id: 0,
+      genre_id: movieGenre,
     },
   });
 
@@ -140,6 +120,13 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
   const setYear = (item: number) => {
     setMovieYear(item);
     setNextPage(1);
+    setPreferences(false);
+  };
+
+  const setGenre = (item: number) => {
+    setMovieGenre(item);
+    setNextPage(1);
+    setPreferences(false);
   };
 
   const refreshMovieList = async () => {
@@ -169,27 +156,28 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
     <SafeAreaView style={styles.container}>
       <BgImage>
         <View>
-          <Icon
-            containerStyle={styles.searchContainer}
-            reverse
-            name='search'
-            type='font-awesome'
-            color='#f50'
-            size={25}
+          <Button
+            icon={<Icon name='tune' color='#fff' size={30} />}
             onPress={togglePreferences}
           />
-
           {preferences ? (
             <View>
               <HeaderAnimView>
                 <SearchBar
+                  containerStyle={styles.searchBar}
                   placeholder='поиск ...'
                   onChangeText={updateSearch}
                   value={search}
                   round={true}
                   onSubmitEditing={onSubmit}
                 />
-                <YearPicker movieYear={movieYear} setMovieYear={setYear} />
+                <View style={styles.filter}>
+                  <YearPicker movieYear={movieYear} setMovieYear={setYear} />
+                  <GenrePicker
+                    movieGenre={movieGenre}
+                    setMovieGenre={setGenre}
+                  />
+                </View>
               </HeaderAnimView>
             </View>
           ) : null}

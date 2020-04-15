@@ -20,15 +20,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   img: {
+    flex: 2,
     width: 300,
     height: 260,
-  },
-  year: {
-    ...colorTheme,
-    width: '100%',
-    padding: 2,
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   serialsDetails: {
     width: '100%',
@@ -37,9 +31,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#d2b48c',
   },
   wrappImg: {
+    flexDirection: 'row',
     width: '100%',
     backgroundColor: 'rgba(0,0,0,0.8)',
     alignItems: 'center',
+  },
+  raitWrapp: {
+    flex: 1,
+  },
+  raitTextImdb: {
+    textAlign: 'center',
+    color: 'green',
+  },
+  raitTextKp: {
+    textAlign: 'center',
+    color: 'orange',
+  },
+  header: {
+    backgroundColor: COLORS.MAIN_COLOR,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  quality: {
+    color: '#01D277',
+  },
+  year: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#01D277',
   },
 });
 
