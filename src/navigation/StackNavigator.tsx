@@ -10,6 +10,8 @@ import SerialsScreen from '../screens/SerialsScreen/SerialsScreen';
 import ShowScreen from '../screens/ShowScreen/ShowScreen';
 import FavoritesScreen from '../screens/FavoritesScreen/FavoritesScreen';
 import SettingsScreen from '../screens/SettingsScreen/SettingsScreen';
+import AnimeScreen from '../screens/AnimeScreen/AnimeScreen';
+import AnimeSerialsScreen from '../screens/AnimeSerialsScreen/AnimeSerialsScreen';
 
 const Stack = createStackNavigator();
 
@@ -97,6 +99,60 @@ export const ShowNavigator = () => {
         component={ShowScreen}
         options={({ navigation }) => ({
           title: 'ТВ',
+          headerRight: () => appHeaderButton(navigation),
+        })}
+      />
+      <Stack.Screen
+        name='Details'
+        component={MovieDetailsScreen}
+        options={detailScreenConfigure}
+      />
+      <Stack.Screen
+        name='Search'
+        component={SearchScreen}
+        options={{
+          title: 'Поиск',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+// ANIME SCREEN
+export const AnimeNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName='Anime'>
+      <Stack.Screen
+        name='Anime'
+        component={AnimeScreen}
+        options={({ navigation }) => ({
+          title: 'Аниме',
+          headerRight: () => appHeaderButton(navigation),
+        })}
+      />
+      <Stack.Screen
+        name='Details'
+        component={MovieDetailsScreen}
+        options={detailScreenConfigure}
+      />
+      <Stack.Screen
+        name='Search'
+        component={SearchScreen}
+        options={{
+          title: 'Поиск',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export const AnimeSerialsNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName='AnimeSerials'>
+      <Stack.Screen
+        name='AnimeSerials'
+        component={AnimeSerialsScreen}
+        options={({ navigation }) => ({
+          title: 'Аниме Серии',
           headerRight: () => appHeaderButton(navigation),
         })}
       />

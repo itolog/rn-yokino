@@ -13,7 +13,7 @@ import { Button } from 'react-native-elements';
 import ErrorBox from '../../shared/components/ErrorBox/ErrorBox';
 import VideoInfo from '../../components/VideoInfo/VideoInfo';
 import Player from '../../components/Player/Player';
-import Loader from '../../shared/components/Loader/Loader';
+import Loader from '../../shared/UI/Loader/Loader';
 import { GET_MOVIE } from './ggl';
 import { MovieInfo } from '../../shared/generated/graphql';
 

@@ -11,7 +11,7 @@ import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { useQuery } from '@apollo/react-hooks';
 
 import { DocumentNode } from 'graphql';
-import Loader from '../Loader/Loader';
+import Loader from '../../UI/Loader/Loader';
 import InfiniteList from '../InfiniteList/InfiniteList';
 import ErrorBox from '../ErrorBox/ErrorBox';
 import { MediaTypes } from '../../types/mediaTypes';
@@ -51,12 +51,30 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
 
   let mediaData: Movies = data?.movies;
 
-  if (type === MediaTypes.FILMS) {
-    mediaData = data?.movies;
-  } else if (type === MediaTypes.SERIALS) {
-    mediaData = data?.serials;
-  } else if (type === MediaTypes.SHOW) {
-    mediaData = data?.show;
+  switch (type) {
+    case MediaTypes.FILMS: {
+      mediaData = data?.movies;
+      break;
+    }
+    case MediaTypes.SERIALS: {
+      mediaData = data?.serials;
+      break;
+    }
+    case MediaTypes.SHOW: {
+      mediaData = data?.show;
+      break;
+    }
+    case MediaTypes.ANIME: {
+      mediaData = data?.anime;
+      break;
+    }
+    case MediaTypes.ANIME_SERIALS: {
+      mediaData = data?.animeSerials;
+      break;
+    }
+    default: {
+      mediaData = data?.movies;
+    }
   }
 
   const FetchNetStat = useCallback(() => {
@@ -185,7 +203,6 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
             </View>
           ) : null}
         </View>
-
         <InfiniteList
           refresh={refreshMovieList}
           loading={loading}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useLayoutEffect, useCallback, useRef } from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -12,6 +12,7 @@ import { Card, Icon } from 'react-native-elements';
 import MovieCard from '../MovieCard/MovieCard';
 import { Movie } from '../../generated/graphql';
 import { THEMES } from '../../constants/themes';
+import EmptyData from '../../UI/EmptyData/EmptyData';
 
 interface Props {
   data: Movie[] | [];
@@ -47,13 +48,16 @@ const InfiniteList: React.FC<Props> = React.memo(
     const [dataMovie, setDataMovie] = useState(data);
     const [isArrowUppVisible, setIsArrowUppVisible] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    // Delay for loading.Fix empty LIst Data.
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       setDataMovie(data);
+      setIsLoaded(true);
     }, [data, dataMovie]);
 
     const footer = () => {
-      if (nextPageUrl === null) {
+      if (nextPageUrl === null && dataMovie.length !== 0) {
         return (
           <Card title='Конец списка'>
             <Text style={styles.footerText}>
@@ -80,7 +84,7 @@ const InfiniteList: React.FC<Props> = React.memo(
       );
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       return () => {
         setIsArrowUppVisible(false);
       };
@@ -109,10 +113,6 @@ const InfiniteList: React.FC<Props> = React.memo(
       });
     };
 
-    if (dataMovie.length === 0) {
-      return <ActivityIndicator size='large' color='white' />;
-    }
-
     const onReloadScreen = () => {
       setRefreshing(true);
       refresh();
@@ -124,6 +124,8 @@ const InfiniteList: React.FC<Props> = React.memo(
       offset: 380 * index,
       index,
     });
+
+    if (!isLoaded) return <ActivityIndicator size='large' color='#0000ff' />;
 
     return (
       <>
@@ -141,6 +143,7 @@ const InfiniteList: React.FC<Props> = React.memo(
           numColumns={1}
           onEndReached={loadMore}
           ListFooterComponent={footer}
+          ListEmptyComponent={EmptyData}
           //
           removeClippedSubviews={true}
           maxToRenderPerBatch={8}

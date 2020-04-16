@@ -8,6 +8,7 @@ import { Icon } from 'react-native-elements';
 
 import { COLORS } from '../shared/constants/colors';
 import {
+  AnimeNavigator, AnimeSerialsNavigator,
   FavoritesNavigator,
   FilmsNavigator,
   SerialsNavigator,
@@ -63,6 +64,26 @@ const Navigator = () => {
               drawerLabel: 'ТВ',
               drawerIcon: () => (
                 <Icon reverse name='film' type='font-awesome' color='#00008b' />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name='Anime'
+            component={AnimeNavigator}
+            options={{
+              drawerLabel: 'Аниме',
+              drawerIcon: () => (
+                <Icon reverse name='film' type='font-awesome' color='#ff00ff' />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name='AnimeSerials'
+            component={AnimeSerialsNavigator}
+            options={{
+              drawerLabel: 'Аниме Серии',
+              drawerIcon: () => (
+                <Icon reverse name='film' type='font-awesome' color='#ff00ff' />
               ),
             }}
           />

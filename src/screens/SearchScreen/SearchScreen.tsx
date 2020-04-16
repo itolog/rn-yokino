@@ -10,7 +10,7 @@ import { RouteProp } from '@react-navigation/native';
 
 import styles from './styles';
 import BgImage from '../../shared/components/BgImage/BgImage';
-import Loader from '../../shared/components/Loader/Loader';
+import Loader from '../../shared/UI/Loader/Loader';
 import MovieCard from '../../shared/components/MovieCard/MovieCard';
 import ErrorBox from '../../shared/components/ErrorBox/ErrorBox';
 import { SEARCH } from './gql';
