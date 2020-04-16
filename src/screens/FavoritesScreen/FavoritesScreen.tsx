@@ -17,7 +17,7 @@ import {
   getErrorFavorites,
 } from '../../store/favorites-movies/selectors';
 
-import BgImage from '../../shared/components/BgImage/BgImage';
+import BgImage from '../../shared/UI/BgImage/BgImage';
 
 const mapStateToProps = (state: AppState) => {
   return {

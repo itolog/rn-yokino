@@ -10,7 +10,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import styles from './styles';
 
 import ErrorOverlay from '../../shared/components/ErrorOverlay/ErrorOverlay';
-import BgImage from '../../shared/components/BgImage/BgImage';
+import BgImage from '../../shared/UI/BgImage/BgImage';
 
 // Store
 import {

@@ -19,7 +19,7 @@ import { MediaTypes } from '../../types/mediaTypes';
 import { Movie, Movies } from '../../generated/graphql';
 import YearPicker from '../../../components/YearPicker/YearPicker';
 import GenrePicker from '../../../components/GenrePicker/GenrePicker';
-import BgImage from '../BgImage/BgImage';
+import BgImage from '../../UI/BgImage/BgImage';
 import HeaderAnimView from '../../animation/HeaderAnimView';
 
 import styles from './styles';
@@ -70,6 +70,14 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
     }
     case MediaTypes.ANIME_SERIALS: {
       mediaData = data?.animeSerials;
+      break;
+    }
+    case MediaTypes.CARTOON: {
+      mediaData = data?.cartoon;
+      break;
+    }
+    case MediaTypes.CARTOON_SERIALS: {
+      mediaData = data?.cartoonSerials;
       break;
     }
     default: {

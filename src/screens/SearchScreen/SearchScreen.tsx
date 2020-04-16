@@ -9,7 +9,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { RouteProp } from '@react-navigation/native';
 
 import styles from './styles';
-import BgImage from '../../shared/components/BgImage/BgImage';
+import BgImage from '../../shared/UI/BgImage/BgImage';
 import Loader from '../../shared/UI/Loader/Loader';
 import MovieCard from '../../shared/components/MovieCard/MovieCard';
 import ErrorBox from '../../shared/components/ErrorBox/ErrorBox';

@@ -12,6 +12,8 @@ import FavoritesScreen from '../screens/FavoritesScreen/FavoritesScreen';
 import SettingsScreen from '../screens/SettingsScreen/SettingsScreen';
 import AnimeScreen from '../screens/AnimeScreen/AnimeScreen';
 import AnimeSerialsScreen from '../screens/AnimeSerialsScreen/AnimeSerialsScreen';
+import CartoonScreen from '../screens/CartoonScreen/CartoonScreen';
+import CartoonSerialsScreen from '../screens/CartoonSerialsScreen/CartoonSerialsScreen';
 
 const Stack = createStackNavigator();
 
@@ -153,6 +155,60 @@ export const AnimeSerialsNavigator = () => {
         component={AnimeSerialsScreen}
         options={({ navigation }) => ({
           title: 'Аниме Серии',
+          headerRight: () => appHeaderButton(navigation),
+        })}
+      />
+      <Stack.Screen
+        name='Details'
+        component={MovieDetailsScreen}
+        options={detailScreenConfigure}
+      />
+      <Stack.Screen
+        name='Search'
+        component={SearchScreen}
+        options={{
+          title: 'Поиск',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export const CartoonNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName='Cartoon'>
+      <Stack.Screen
+        name='Cartoon'
+        component={CartoonScreen}
+        options={({ navigation }) => ({
+          title: 'Мульты',
+          headerRight: () => appHeaderButton(navigation),
+        })}
+      />
+      <Stack.Screen
+        name='Details'
+        component={MovieDetailsScreen}
+        options={detailScreenConfigure}
+      />
+      <Stack.Screen
+        name='Search'
+        component={SearchScreen}
+        options={{
+          title: 'Поиск',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export const CartoonSerialsNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName='CartoonSerials'>
+      <Stack.Screen
+        name='CartoonSerials'
+        component={CartoonSerialsScreen}
+        options={({ navigation }) => ({
+          title: 'Мульт Серии',
           headerRight: () => appHeaderButton(navigation),
         })}
       />
