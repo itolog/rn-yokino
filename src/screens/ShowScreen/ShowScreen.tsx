@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { MOVIES } from './ggl';
+import { SHOW } from './gql';
+
 import WithPagination from '../../shared/components/WithPagination/WithPagination';
 import { MediaTypes } from '../../shared/types/mediaTypes';
 
-const FilmsScreen = () => {
-  return <WithPagination ggl={MOVIES} type={MediaTypes.FILMS} />;
+const ShowScreen = () => {
+  return <WithPagination ggl={SHOW} type={MediaTypes.SHOW} />;
 };
 
-export default FilmsScreen;
+export default ShowScreen;

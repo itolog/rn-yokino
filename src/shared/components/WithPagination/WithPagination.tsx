@@ -50,10 +50,13 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
   });
 
   let mediaData: Movies = data?.movies;
-  if (type === MediaTypes.MOVIES) {
+
+  if (type === MediaTypes.FILMS) {
     mediaData = data?.movies;
   } else if (type === MediaTypes.SERIALS) {
     mediaData = data?.serials;
+  } else if (type === MediaTypes.SHOW) {
+    mediaData = data?.show;
   }
 
   const FetchNetStat = useCallback(() => {

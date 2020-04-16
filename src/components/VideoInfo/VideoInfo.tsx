@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Text, View, ActivityIndicator } from 'react-native';
-import { Icon, Image, AirbnbRating } from 'react-native-elements';
+import { Icon, Image } from 'react-native-elements';
 import { MovieInfo } from '../../shared/generated/graphql';
 import ErrorOverlay from '../../shared/components/ErrorOverlay/ErrorOverlay';
 
@@ -64,37 +64,61 @@ const VideoInfo: React.FC<Props> = ({
     setFavorites(is);
   }, [favoriteMoviesIds, data]);
 
-  const addFavorites = async () => {
-    if (data.name && data.id && data.poster) {
-      const payload = {
-        title: data.name,
-        id: data.id,
-        poster: data.poster,
-      };
-      await saveMovie(payload);
-    }
+  const addFavorites = () => {
+    requestAnimationFrame(() => {
+      if (data.name && data.id && data.poster) {
+        const payload = {
+          title: data.name,
+          id: data.id,
+          poster: data.poster,
+        };
+        saveMovie(payload);
+      }
+    });
   };
 
-  const removeFavorites = async () => {
-    if (data.id) {
-      await removeMovie(data.id);
-    }
+  const removeFavorites = () => {
+    requestAnimationFrame(() => {
+      if (data.id) {
+        removeMovie(data.id);
+      }
+    });
   };
+
+  const starRaitComponent = () => (
+    <View style={styles.sectionRait}>
+      <IsEmpty val={data.kinopoisk}>
+        <View style={styles.sectionRaitContent}>
+          <Icon
+            name='star'
+            type='ionicone'
+            color='green'
+            size={22}
+            onPress={removeFavorites}
+          />
+          <Text style={styles.raitKp}>kp : {data.kinopoisk}</Text>
+        </View>
+      </IsEmpty>
+      <IsEmpty val={data.imdb}>
+        <View style={styles.sectionRaitContent}>
+          <Icon
+            name='star'
+            type='ionicone'
+            color='orange'
+            size={22}
+            onPress={removeFavorites}
+          />
+          <Text style={styles.raitImdb}>imdb : {data.imdb}</Text>
+        </View>
+      </IsEmpty>
+    </View>
+  );
 
   const toggleFavorite = () => {
-    const rait = Number(data?.kinopoisk) || 0;
     if (favorites) {
       return (
         <View style={styles.favorites}>
-          <IsEmpty val={data?.kinopoisk}>
-            <AirbnbRating
-              count={10}
-              defaultRating={rait}
-              size={18}
-              reviews={[]}
-              isDisabled={true}
-            />
-          </IsEmpty>
+          {starRaitComponent()}
           <Icon
             raised
             name='bookmark'
@@ -107,15 +131,7 @@ const VideoInfo: React.FC<Props> = ({
     }
     return (
       <View style={styles.favorites}>
-        <IsEmpty val={data.kinopoisk}>
-          <AirbnbRating
-            count={10}
-            defaultRating={rait}
-            size={18}
-            reviews={[]}
-            isDisabled={true}
-          />
-        </IsEmpty>
+        {starRaitComponent()}
         <Icon
           raised
           name='bookmark-border'
@@ -153,17 +169,26 @@ const VideoInfo: React.FC<Props> = ({
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Название</Text>
           {data.name && <Text style={styles.sectionText}>{data.name}</Text>}
-          {data.name_eng && (
+          {data.name_eng ? (
             <Text style={styles.sectionText}>{data.name_eng}</Text>
-          )}
+          ) : null}
         </View>
       </IsEmpty>
 
       {/* DATE */}
       <IsEmpty val={data.year}>
         <View style={styles.oneLineSection}>
-          <Text style={styles.sectionTitle}>Дата выхода</Text>
+          <Icon size={26} name='date-range' onPress={removeFavorites} />
           <Text style={styles.sectionTitleOneLine}>{data.year}</Text>
+        </View>
+      </IsEmpty>
+      {/* DURATION */}
+      <IsEmpty val={data.time}>
+        <View style={styles.oneLineSection}>
+          <Icon size={26} name='timer' onPress={removeFavorites} />
+          <Text style={styles.sectionTitleOneLine}>
+            {data?.time?.split('/')[0]}
+          </Text>
         </View>
       </IsEmpty>
       {/* GENRES */}
@@ -171,7 +196,25 @@ const VideoInfo: React.FC<Props> = ({
         <IsEmpty val={data?.genre}>
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Жанр</Text>
-            {data?.genre?.map((item: string, index: number) => {
+            <View style={styles.sectionRow}>
+              {data?.genre?.map((item: string, index: number) => {
+                return (
+                  <Text key={index} style={styles.sectionText}>
+                    {item}
+                  </Text>
+                );
+              })}
+            </View>
+          </View>
+        </IsEmpty>
+      )}
+      {/*  Actors */}
+
+      <IsEmpty val={data?.actors}>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Актёры</Text>
+          <View style={styles.section}>
+            {data?.actors?.map((item: string, index: number) => {
               return (
                 <Text key={index} style={styles.sectionText}>
                   {item}
@@ -179,8 +222,9 @@ const VideoInfo: React.FC<Props> = ({
               );
             })}
           </View>
-        </IsEmpty>
-      )}
+        </View>
+      </IsEmpty>
+
       {/*  Description */}
       <IsEmpty val={data.description}>
         <View style={styles.section}>

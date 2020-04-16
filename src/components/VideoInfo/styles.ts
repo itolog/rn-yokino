@@ -8,13 +8,29 @@ const styles = StyleSheet.create({
   },
   section: {
     justifyContent: 'center',
-    marginTop: 15,
-    marginBottom: 10,
-    padding: 5,
+    marginTop: 5,
+    marginBottom: 5,
+    padding: 2,
+  },
+  sectionRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
   sectionRait: {
-    flexDirection: 'row',
+    width: 150,
+    flexDirection: 'column',
     justifyContent: 'space-around',
+  },
+  sectionRaitContent: {
+    flexDirection: 'row',
+    // justifyContent: 'space-around',
+  },
+  raitKp: {
+    color: 'green',
+  },
+  raitImdb: {
+    color: 'orange',
   },
   sectionTitle: {
     backgroundColor: 'white',
