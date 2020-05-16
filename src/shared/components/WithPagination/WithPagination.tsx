@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar, Card, Icon } from 'react-native-elements';
 
 import uniqBy from 'lodash.uniqby';
-
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { useQuery } from '@apollo/react-hooks';

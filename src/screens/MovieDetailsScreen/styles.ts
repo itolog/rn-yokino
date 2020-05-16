@@ -6,6 +6,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.MAIN_COLOR,
   },
+  partsContainer: {
+    width: '100%',
+    marginBottom: 30,
+    alignItems: 'center',
+  },
+  partsTitle: {
+    fontSize: 18,
+    color: '#b9d0db',
+  },
   backBtn: {
     backgroundColor: '#ff4500',
   },

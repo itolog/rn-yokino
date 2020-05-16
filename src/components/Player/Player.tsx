@@ -18,6 +18,7 @@ interface Props {
 
 const styles = StyleSheet.create({
   container: {
+    // width: '100%',
     backgroundColor: COLORS.MAIN_COLOR,
   },
   backgroundVideo: {

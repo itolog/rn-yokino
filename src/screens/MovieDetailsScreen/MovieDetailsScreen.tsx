@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { memo } from 'react';
 import {
   ScrollView,
-  StatusBar,
   SafeAreaView,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
+  FlatList,
+  Text,
+  View,
+  StatusBar,
 } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
@@ -14,11 +15,11 @@ import ErrorBox from '../../shared/components/ErrorBox/ErrorBox';
 import VideoInfo from '../../components/VideoInfo/VideoInfo';
 import Player from '../../components/Player/Player';
 import Loader from '../../shared/UI/Loader/Loader';
+import PartsCard from '../../components/PartsCard/PartsCard';
 import { GET_MOVIE } from './ggl';
 import { MovieInfo } from '../../shared/generated/graphql';
 
 import styles from './styles';
-import { COLORS } from '../../shared/constants/colors';
 
 type RootStackParamList = {
   Details: { id: number };
@@ -29,12 +30,10 @@ interface Props {
   route: DetailsScreenRouteProp;
 }
 
-const MovieDetailsScreen = ({ route }: Props) => {
+const MovieDetailsScreen = memo(({ route }: Props) => {
   const id = Number(route.params?.id);
 
   const navigation = useNavigation();
-
-  const [isStatusBarHide, setIsStatusBarHide] = useState(false);
 
   const { loading, error, data } = useQuery(GET_MOVIE, {
     variables: { id },
@@ -42,14 +41,12 @@ const MovieDetailsScreen = ({ route }: Props) => {
 
   const movie: MovieInfo = data?.movieInfo;
 
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (event.nativeEvent.contentOffset.y > 200) {
-      setIsStatusBarHide(true);
-    } else if (event.nativeEvent.contentOffset.y < 200) {
-      setIsStatusBarHide(false);
+  const PartsList = () => {
+    if (movie.parts?.length) {
+      return movie.parts?.filter(item => item !== id);
     }
+    return [];
   };
-
   const handleBack = () => {
     requestAnimationFrame(() => {
       navigation.goBack();
@@ -61,7 +58,7 @@ const MovieDetailsScreen = ({ route }: Props) => {
       return <ErrorBox msg={error?.message} />;
     }
     return (
-      <ScrollView onScroll={handleScroll}>
+      <ScrollView>
         {!loading ? (
           <>
             <Button
@@ -71,6 +68,20 @@ const MovieDetailsScreen = ({ route }: Props) => {
             />
             <VideoInfo data={movie} />
             <Player src={movie?.iframe_url} id={movie?.kinopoisk_id} />
+
+            {!!PartsList()?.length && (
+              <View style={styles.partsContainer}>
+                <Text style={styles.partsTitle}>Рекомендуем посмотреть</Text>
+                <FlatList
+                  horizontal={true}
+                  data={PartsList()}
+                  keyExtractor={(item: any) => item.toLocaleString()}
+                  renderItem={({ item }) => (
+                    <PartsCard id={item} />
+                  )}
+                />
+              </View>
+            )}
           </>
         ) : (
           <Loader />
@@ -80,16 +91,10 @@ const MovieDetailsScreen = ({ route }: Props) => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-        hidden={isStatusBarHide}
-        animated={true}
-        showHideTransition='fade'
-        barStyle='light-content'
-        backgroundColor={COLORS.MAIN_COLOR}
-      />
+      <StatusBar hidden={true} />
       {content()}
     </SafeAreaView>
   );
-};
+});
 
 export default MovieDetailsScreen;

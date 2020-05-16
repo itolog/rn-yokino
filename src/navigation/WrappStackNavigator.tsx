@@ -7,6 +7,7 @@ import SettingsScreen from '../screens/SettingsScreen/SettingsScreen';
 import SearchScreen from '../screens/SearchScreen/SearchScreen';
 
 import { COLORS } from '../shared/constants/colors';
+import { THEMES } from '../shared/constants/themes';
 
 const Stack = createStackNavigator();
 
@@ -28,10 +29,18 @@ const detailScreenConfigure = {
     backgroundColor: COLORS.MAIN_COLOR,
   },
 };
-
 const WrappStackNavigator: React.FC<Props> = ({ children, name }) => {
   return (
-    <Stack.Navigator initialRouteName={name}>
+    <Stack.Navigator
+      headerMode='float'
+      screenOptions={{
+        headerStatusBarHeight: 0,
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: COLORS.MAIN_COLOR,
+        },
+      }}
+      initialRouteName={name}>
       {children}
       <Stack.Screen
         name='Details'

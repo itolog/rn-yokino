@@ -22,6 +22,7 @@ export const GET_MOVIE = gql`
       quality
       time
       backdrop_path
+      parts
       trailers {
         number
         name

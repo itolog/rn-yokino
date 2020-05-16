@@ -19,6 +19,12 @@ import {
 
 import BgImage from '../../shared/UI/BgImage/BgImage';
 
+interface Favorite {
+  id: number;
+  poster: string;
+  title: string;
+}
+
 const mapStateToProps = (state: AppState) => {
   return {
     favorites: getFavoritesMovies(state),
@@ -58,9 +64,9 @@ const FavoritesScreen = ({
     });
   };
 
-  const renderItem = ({ item }: any) => {
+  const renderItem = ({ item }: { item: Favorite }) => {
     return (
-      <Card title={item.name} image={{ uri: item.poster }}>
+      <Card title={item.title} image={{ uri: item.poster }}>
         <View style={styles.btns}>
           <Button
             icon={<Icon name='delete' color='#ffffff' />}
