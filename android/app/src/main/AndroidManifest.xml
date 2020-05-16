@@ -17,6 +17,7 @@
         android:launchMode="singleTask"
         android:windowSoftInputMode="adjustResize">
         <intent-filter>
+            <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>

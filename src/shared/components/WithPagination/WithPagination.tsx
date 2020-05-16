@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { SearchBar, Card, Icon, Button } from 'react-native-elements';
+import { SearchBar, Card, Icon } from 'react-native-elements';
 
 import uniqBy from 'lodash.uniqby';
 
@@ -21,6 +21,7 @@ import YearPicker from '../../../components/YearPicker/YearPicker';
 import GenrePicker from '../../../components/GenrePicker/GenrePicker';
 import BgImage from '../../UI/BgImage/BgImage';
 import HeaderAnimView from '../../animation/HeaderAnimView';
+import ActionHeader from '../../../components/ActionHeader/ActionHeader';
 
 import styles from './styles';
 
@@ -184,33 +185,27 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
   return (
     <SafeAreaView style={styles.container}>
       <BgImage>
-        <View>
-          <Button
-            icon={<Icon name='tune' color='#fff' size={30} />}
-            onPress={togglePreferences}
-          />
-          {preferences ? (
-            <View>
-              <HeaderAnimView>
-                <SearchBar
-                  containerStyle={styles.searchBar}
-                  placeholder='поиск ...'
-                  onChangeText={updateSearch}
-                  value={search}
-                  round={true}
-                  onSubmitEditing={onSubmit}
-                />
-                <View style={styles.filter}>
-                  <YearPicker movieYear={movieYear} setMovieYear={setYear} />
-                  <GenrePicker
-                    movieGenre={movieGenre}
-                    setMovieGenre={setGenre}
-                  />
-                </View>
-              </HeaderAnimView>
-            </View>
-          ) : null}
-        </View>
+        {/* HEADER NAV */}
+        <ActionHeader setPreferences={togglePreferences} />
+        {/* SEARCH MODAl */}
+        {preferences ? (
+          <View>
+            <HeaderAnimView>
+              <SearchBar
+                containerStyle={styles.searchBar}
+                placeholder='поиск ...'
+                onChangeText={updateSearch}
+                value={search}
+                round={true}
+                onSubmitEditing={onSubmit}
+              />
+              <View style={styles.filter}>
+                <YearPicker movieYear={movieYear} setMovieYear={setYear} />
+                <GenrePicker movieGenre={movieGenre} setMovieGenre={setGenre} />
+              </View>
+            </HeaderAnimView>
+          </View>
+        ) : null}
         <InfiniteList
           refresh={refreshMovieList}
           loading={loading}

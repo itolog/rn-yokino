@@ -12,10 +12,8 @@ import {
   AnimeSerialsNavigator,
   CartoonNavigator,
   CartoonSerialsNavigator,
-  FavoritesNavigator,
   FilmsNavigator,
   SerialsNavigator,
-  SettingsNavigator,
   ShowNavigator,
 } from './StackNavigator';
 
@@ -107,31 +105,6 @@ const Navigator = () => {
               drawerLabel: 'Мульт Cерии',
               drawerIcon: () => (
                 <Icon reverse name='film' type='font-awesome' color='#4b0082' />
-              ),
-            }}
-          />
-          <Drawer.Screen
-            name='Favorites'
-            component={FavoritesNavigator}
-            options={{
-              drawerLabel: 'Избранное',
-              drawerIcon: () => (
-                <Icon
-                  reverse
-                  name='heartbeat'
-                  type='font-awesome'
-                  color='#f50'
-                />
-              ),
-            }}
-          />
-          <Drawer.Screen
-            name='Настройки'
-            component={SettingsNavigator}
-            options={{
-              drawerLabel: 'Настройки',
-              drawerIcon: () => (
-                <Icon reverse name='cogs' type='font-awesome' color='#6734BA' />
               ),
             }}
           />

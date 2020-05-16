@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { AppState } from '../../store/createStore';
 
 import { THEMES } from '../constants/themes';
+import { COLORS } from '../constants/colors';
 
 interface Props {
   children: JSX.Element[] | JSX.Element;
@@ -59,7 +60,7 @@ const HeaderAnimView: React.FC<Props> = React.memo(({ children }) => {
         right: 0,
         zIndex: 30,
         opacity: fadeAnim,
-        backgroundColor: THEMES.PREFERENCE_BG,
+        backgroundColor: COLORS.MAIN_TRANSPARENT,
         height: Dimensions.get('window').height,
         transform: [
           {

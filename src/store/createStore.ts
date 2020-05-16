@@ -21,6 +21,10 @@ import { epics as settingsEpic } from './settings/epics';
 import { ActionTypeUnion as AnimationActionType } from './animation/actions';
 import { reducer as animationReducer } from './animation/reducer';
 
+// import Header
+import { ActionTypeUnion as HeaderActionsType } from './header/actions';
+import { reducer as headerReducer } from './header/reducer';
+
 const rootEpic = combineEpics(
   ...netInfoEpics,
   ...favoritesEpics,
@@ -34,6 +38,7 @@ const reducer = combineReducers({
   favoritesMovie: favoritesReducer,
   settings: settingsReducer,
   animState: animationReducer,
+  header: headerReducer,
 });
 
 export type RootActions = ActionType<
@@ -41,6 +46,7 @@ export type RootActions = ActionType<
   | FavoritesActionType
   | SettingsActionType
   | AnimationActionType
+  | HeaderActionsType
 >;
 
 export type AppState = StateType<typeof reducer>;

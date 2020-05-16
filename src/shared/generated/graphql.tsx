@@ -41,6 +41,7 @@ export type LastUpdateItems = {
   season?: Maybe<Scalars['Float']>;
   episode?: Maybe<Scalars['Float']>;
   availability?: Maybe<Scalars['String']>;
+  iframe_url?: Maybe<Scalars['String']>;
 };
 
 export type Movie = {
@@ -84,6 +85,7 @@ export type MovieInfo = {
   genre?: Maybe<Array<Scalars['String']>>;
   actors?: Maybe<Array<Scalars['String']>>;
   country?: Maybe<Array<Scalars['String']>>;
+  parts?: Maybe<Array<Scalars['Int']>>;
   trailers?: Maybe<Array<Trailers>>;
 };
 
@@ -182,6 +184,7 @@ export type QueryMovieInfoArgs = {
 
 
 export type QueryGetCollectionsArgs = {
+  page: Scalars['Float'];
   id: Scalars['Float'];
 };
 

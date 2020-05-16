@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { COLORS } from '../../constants/colors';
-import { THEMES } from '../../constants/themes';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,6 +9,12 @@ const styles = StyleSheet.create({
   bgImg: {
     width: '100%',
     height: '100%',
+  },
+  headerBtns: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 15,
+    marginTop: 5,
   },
   noConnect: {
     alignContent: 'center',
@@ -25,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 10,
   },
-  searchBar: { backgroundColor: THEMES.PREFERENCE_BG },
+  searchBar: { backgroundColor: 'transparent' },
 });
 
 export default styles;
