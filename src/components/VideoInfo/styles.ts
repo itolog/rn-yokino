@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   oneLineSection: {
     backgroundColor: 'white',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     color: 'black',
     padding: 10,

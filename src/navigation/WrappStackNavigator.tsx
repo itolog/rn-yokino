@@ -16,17 +16,18 @@ interface Props {
   name: string;
 }
 
-const DETAILS_TITLE = '';
+const DETAILS_TITLE = 'YOKINO';
 
 const detailScreenConfigure = {
   headerStatusBarHeight: 0,
   title: DETAILS_TITLE,
-  headerShown: false,
+  // headerShown: false,
   headerBackImage: () => (
     <Icon color='orange' size={46} name='ios-arrow-back' type='ionicon' />
   ),
   headerStyle: {
     backgroundColor: COLORS.MAIN_COLOR,
+    height: THEMES.HEADER_SIZE,
   },
 };
 const WrappStackNavigator: React.FC<Props> = ({ children, name }) => {
@@ -38,6 +39,7 @@ const WrappStackNavigator: React.FC<Props> = ({ children, name }) => {
         headerTintColor: 'white',
         headerStyle: {
           backgroundColor: COLORS.MAIN_COLOR,
+          height: THEMES.HEADER_SIZE,
         },
       }}
       initialRouteName={name}>

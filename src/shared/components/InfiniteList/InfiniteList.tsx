@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     marginBottom: 10,
+    padding: 15,
   },
   iconContainer: {
     position: 'absolute',
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
 });
 
 const InfiniteList: React.FC<Props> = React.memo(
-  ({ data, loading, refresh, loadMore, year, nextPageUrl }) => {
+  ({ data, loading, refresh, loadMore, nextPageUrl }) => {
     const flatRef = useRef<FlatList<any>>(null);
     const [dataMovie, setDataMovie] = useState(data);
     const [isArrowUppVisible, setIsArrowUppVisible] = useState(false);
@@ -60,9 +61,7 @@ const InfiniteList: React.FC<Props> = React.memo(
       if (nextPageUrl === null && dataMovie.length !== 0) {
         return (
           <Card title='Конец списка'>
-            <Text style={styles.footerText}>
-              Вы просмотрели весь контент {year} года.
-            </Text>
+            <Text style={styles.footerText}>Вы просмотрели весь контент.</Text>
           </Card>
         );
       }

@@ -7,10 +7,9 @@ import {
   View,
   StatusBar,
 } from 'react-native';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 
-import { Button } from 'react-native-elements';
 import ErrorBox from '../../shared/components/ErrorBox/ErrorBox';
 import VideoInfo from '../../components/VideoInfo/VideoInfo';
 import Player from '../../components/Player/Player';
@@ -34,8 +33,6 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
   const ref = useRef<ScrollView>(null);
   const id = Number(route.params?.id);
 
-  const navigation = useNavigation();
-
   const { loading, error, data } = useQuery(GET_MOVIE, {
     variables: { id },
   });
@@ -47,11 +44,6 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
       return movie.parts?.filter(item => item !== id);
     }
     return [];
-  };
-  const handleBack = () => {
-    requestAnimationFrame(() => {
-      navigation.goBack();
-    });
   };
 
   const scrollTop = () => {
@@ -68,11 +60,13 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
       <ScrollView ref={ref}>
         {!loading ? (
           <>
-            <Button
-              title='НАЗАД'
-              onPress={handleBack}
-              buttonStyle={styles.backBtn}
-            />
+            {/*
+             <Button
+             title='НАЗАД'
+             onPress={handleBack}
+             buttonStyle={styles.backBtn}
+             />
+             */}
             <VideoInfo data={movie} />
             <Player src={movie?.iframe_url} id={movie?.kinopoisk_id} />
 

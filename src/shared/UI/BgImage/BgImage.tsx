@@ -8,8 +8,10 @@ import { getImagePath } from '../../../store/settings/selectors';
 
 const styles = StyleSheet.create({
   bgImg: {
-    width: '100%',
     height: '100%',
+  },
+  image: {
+    resizeMode: 'cover',
   },
 });
 
@@ -25,7 +27,10 @@ type Props = ReturnType<typeof mapStateToProps> & IProps;
 
 const BgImage: React.FC<Props> = React.memo(({ children, image }) => {
   return (
-    <ImageBackground source={{ uri: image }} style={styles.bgImg}>
+    <ImageBackground
+      source={{ uri: image }}
+      imageStyle={styles.image}
+      style={styles.bgImg}>
       {children}
     </ImageBackground>
   );
