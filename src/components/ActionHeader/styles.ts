@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.MAIN_TRANSPARENT,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingBottom: 7,
+    paddingBottom: 10,
     paddingTop: 7,
   },
   buttonsGroup: {

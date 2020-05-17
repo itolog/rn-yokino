@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -31,6 +31,7 @@ interface Props {
 }
 
 const MovieDetailsScreen = memo(({ route }: Props) => {
+  const ref = useRef<ScrollView>(null);
   const id = Number(route.params?.id);
 
   const navigation = useNavigation();
@@ -53,12 +54,18 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
     });
   };
 
+  const scrollTop = () => {
+    if (ref.current) {
+      ref.current.scrollTo({ x: 1, y: 0, animated: true });
+    }
+  };
+
   const content = () => {
     if (error) {
       return <ErrorBox msg={error?.message} />;
     }
     return (
-      <ScrollView>
+      <ScrollView ref={ref}>
         {!loading ? (
           <>
             <Button
@@ -77,7 +84,7 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
                   data={PartsList()}
                   keyExtractor={(item: any) => item.toLocaleString()}
                   renderItem={({ item }) => (
-                    <PartsCard id={item} />
+                    <PartsCard scrollTop={scrollTop} id={item} />
                   )}
                 />
               </View>

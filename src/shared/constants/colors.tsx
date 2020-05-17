@@ -5,4 +5,5 @@ export const COLORS = {
   PROGRESS_COLOR: '#ff00ff',
   slateblue: '#6a5acd',
   MAIN_TRANSPARENT: 'rgba(3,0,0,0.92)',
+  BUTTON_PARTS: '#4b0082',
 };

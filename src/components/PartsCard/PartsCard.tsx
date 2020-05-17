@@ -13,20 +13,21 @@ import { COLORS } from '../../shared/constants/colors';
 
 interface Props {
   id: number;
+  scrollTop: () => void;
 }
 
 const styles = StyleSheet.create({
   card: {
     width: 200,
-    margin: 5,
+    margin: 7,
   },
   poster: {
     height: 280,
   },
-  pressBtn: { backgroundColor: COLORS.MAIN_COLOR },
+  pressBtn: { backgroundColor: COLORS.BUTTON_PARTS },
 });
 
-const PartsCard: React.FC<Props> = ({ id }) => {
+const PartsCard: React.FC<Props> = ({ id, scrollTop }) => {
   const navigation = useNavigation();
 
   const { loading, error, data } = useQuery(GET_MOVIE, {
@@ -42,6 +43,7 @@ const PartsCard: React.FC<Props> = ({ id }) => {
   const handlePress = () => {
     requestAnimationFrame(() => {
       navigation.navigate('Details', { id });
+      scrollTop();
     });
   };
 
@@ -55,7 +57,7 @@ const PartsCard: React.FC<Props> = ({ id }) => {
       />
       <Button
         onPress={handlePress}
-        icon={<Icon name='eye' size={30} color={COLORS.MENU_COLOR} />}
+        // icon={<Icon name='eye' size={30} color={COLORS.MENU_COLOR} />}
         buttonStyle={styles.pressBtn}
         title='перейти'
       />
