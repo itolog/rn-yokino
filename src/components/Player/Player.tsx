@@ -90,7 +90,7 @@ const Player: React.FC<Props> = ({ src = '', id }) => {
           domStorageEnabled={true}
           allowsFullscreenVideo={true}
           source={{
-            html: html(`https://yokino-api.herokuapp.com/player2?id=${id}`),
+            html: html(`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`),
           }}
           onLoadProgress={({ nativeEvent }) => {
             setProgress(nativeEvent.progress);
