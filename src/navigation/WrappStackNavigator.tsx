@@ -7,7 +7,6 @@ import SettingsScreen from '../screens/SettingsScreen/SettingsScreen';
 import SearchScreen from '../screens/SearchScreen/SearchScreen';
 
 import { COLORS } from '../shared/constants/colors';
-import { THEMES } from '../shared/constants/themes';
 
 const Stack = createStackNavigator();
 
@@ -19,27 +18,20 @@ interface Props {
 const DETAILS_TITLE = 'YOKINO';
 
 const detailScreenConfigure = {
-  headerStatusBarHeight: 0,
   title: DETAILS_TITLE,
-  // headerShown: false,
+  headerShown: false,
   headerBackImage: () => (
     <Icon color='orange' size={46} name='ios-arrow-back' type='ionicon' />
   ),
-  headerStyle: {
-    backgroundColor: COLORS.MAIN_COLOR,
-    height: THEMES.HEADER_SIZE,
-  },
 };
 const WrappStackNavigator: React.FC<Props> = ({ children, name }) => {
   return (
     <Stack.Navigator
       headerMode='float'
       screenOptions={{
-        headerStatusBarHeight: 0,
         headerTintColor: 'white',
         headerStyle: {
           backgroundColor: COLORS.MAIN_COLOR,
-          height: THEMES.HEADER_SIZE,
         },
       }}
       initialRouteName={name}>

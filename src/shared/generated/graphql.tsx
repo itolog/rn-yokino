@@ -15,6 +15,12 @@ export type Collection = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type Envelope = {
+   __typename?: 'Envelope';
+  from?: Maybe<Scalars['String']>;
+  to?: Maybe<Array<Scalars['String']>>;
+};
+
 export type Episodes = {
    __typename?: 'Episodes';
   episode?: Maybe<Scalars['Float']>;
@@ -42,6 +48,23 @@ export type LastUpdateItems = {
   episode?: Maybe<Scalars['Float']>;
   availability?: Maybe<Scalars['String']>;
   iframe_url?: Maybe<Scalars['String']>;
+};
+
+export type MailInput = {
+  from: Scalars['String'];
+  text: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type MailModel = {
+   __typename?: 'MailModel';
+  accepted?: Maybe<Array<Scalars['String']>>;
+  envelopeTime?: Maybe<Scalars['Float']>;
+  messageTime?: Maybe<Scalars['Float']>;
+  messageSize?: Maybe<Scalars['Float']>;
+  response?: Maybe<Scalars['String']>;
+  messageId?: Maybe<Scalars['String']>;
+  envelope?: Maybe<Envelope>;
 };
 
 export type Movie = {
@@ -95,6 +118,16 @@ export type Movies = {
   prev_page?: Maybe<Scalars['String']>;
   next_page?: Maybe<Scalars['String']>;
   results?: Maybe<Array<Movie>>;
+};
+
+export type Mutation = {
+   __typename?: 'Mutation';
+  sendEmail: MailModel;
+};
+
+
+export type MutationSendEmailArgs = {
+  data: MailInput;
 };
 
 export type NowPlaying = {

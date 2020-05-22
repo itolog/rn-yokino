@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -6,10 +6,13 @@ import {
   Text,
   View,
   StatusBar,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 
+import { Button } from 'react-native-elements';
 import ErrorBox from '../../shared/components/ErrorBox/ErrorBox';
 import VideoInfo from '../../components/VideoInfo/VideoInfo';
 import Player from '../../components/Player/Player';
@@ -30,6 +33,9 @@ interface Props {
 }
 
 const MovieDetailsScreen = memo(({ route }: Props) => {
+  const navigation = useNavigation();
+
+  const [isStatusBarHide, setIsStatusBarHide] = useState(false);
   const ref = useRef<ScrollView>(null);
   const id = Number(route.params?.id);
 
@@ -52,21 +58,37 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
     }
   };
 
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { nativeEvent } = event;
+    requestAnimationFrame(() => {
+      if (nativeEvent.contentOffset.y > 200) {
+        setIsStatusBarHide(true);
+      } else if (nativeEvent.contentOffset.y < 200) {
+        setIsStatusBarHide(false);
+      }
+    });
+  };
+
+  const handleBack = () => {
+    requestAnimationFrame(() => {
+      navigation.goBack();
+    });
+  };
+
   const content = () => {
     if (error) {
       return <ErrorBox msg={error?.message} />;
     }
     return (
-      <ScrollView ref={ref}>
+      <ScrollView ref={ref} onScroll={handleScroll}>
         {!loading ? (
           <>
-            {/*
-             <Button
-             title='НАЗАД'
-             onPress={handleBack}
-             buttonStyle={styles.backBtn}
-             />
-             */}
+            <Button
+              title='НАЗАД'
+              onPress={handleBack}
+              buttonStyle={styles.backBtn}
+            />
+
             <VideoInfo data={movie} />
             <Player src={movie?.iframe_url} id={movie?.kinopoisk_id} />
 
@@ -92,7 +114,7 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar hidden={true} />
+      <StatusBar hidden={isStatusBarHide} />
       {content()}
     </SafeAreaView>
   );

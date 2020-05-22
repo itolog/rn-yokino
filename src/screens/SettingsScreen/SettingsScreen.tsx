@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Alert, TouchableOpacity, ImageBackground } from 'react-native';
+import {
+  Alert,
+  TouchableOpacity,
+  ImageBackground,
+  ScrollView,
+} from 'react-native';
 import { Card, Button, Icon } from 'react-native-elements';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,6 +16,7 @@ import styles from './styles';
 
 import ErrorOverlay from '../../shared/components/ErrorOverlay/ErrorOverlay';
 import BgImage from '../../shared/UI/BgImage/BgImage';
+import Mail from '../../components/Mail/Mail';
 
 // Store
 import {
@@ -77,41 +83,47 @@ const SettingsScreen = ({
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BgImage>
-        {/*  ErrorOverlay */}
-        <ErrorOverlay
-          visible={!!imagePathError}
-          message={imagePathError!}
-          locationError='экран SettingsScreen.tsx'
-        />
-
-        <Card
-          titleStyle={styles.cardStyleTitle}
-          containerStyle={styles.cardStyle}
-          title='Сменить фон'>
-          <ImageBackground source={{ uri: loacalImg }} style={styles.cardBtns}>
-            <TouchableOpacity onPress={resetImageHandler}>
-              <Icon name='delete-forever' reverse size={25} color='#c71585' />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={pickImageHandler}>
-              <Icon
-                name='ios-image'
-                reverse
-                type='ionicon'
-                size={25}
-                color='#000080'
-              />
-            </TouchableOpacity>
-          </ImageBackground>
-          <Button
-            onPress={saveImageHandler}
-            buttonStyle={styles.btnSave}
-            icon={<Icon name='save' color='white' />}
+    <ScrollView>
+      <SafeAreaView style={styles.container}>
+        <BgImage>
+          {/*  ErrorOverlay */}
+          <ErrorOverlay
+            visible={!!imagePathError}
+            message={imagePathError!}
+            locationError='экран SettingsScreen.tsx'
           />
-        </Card>
-      </BgImage>
-    </SafeAreaView>
+
+          <Card
+            titleStyle={styles.cardStyleTitle}
+            containerStyle={styles.cardStyle}
+            title='Сменить фон'>
+            <ImageBackground
+              source={{ uri: loacalImg }}
+              style={styles.cardBtns}>
+              <TouchableOpacity onPress={resetImageHandler}>
+                <Icon name='delete-forever' reverse size={25} color='#c71585' />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={pickImageHandler}>
+                <Icon
+                  name='ios-image'
+                  reverse
+                  type='ionicon'
+                  size={25}
+                  color='#000080'
+                />
+              </TouchableOpacity>
+            </ImageBackground>
+            <Button
+              onPress={saveImageHandler}
+              buttonStyle={styles.btnSave}
+              icon={<Icon name='save' color='white' />}
+            />
+          </Card>
+          {/* MAIL SEND  */}
+          <Mail />
+        </BgImage>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
