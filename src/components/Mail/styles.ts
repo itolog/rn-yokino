@@ -56,6 +56,11 @@ const styles = StyleSheet.create({
     minHeight: 150,
     justifyContent: 'space-around',
   },
+  formHeader: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });
 
 export default styles;

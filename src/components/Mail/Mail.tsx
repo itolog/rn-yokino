@@ -1,24 +1,54 @@
-import React, { useState } from 'react';
-import { Modal, TouchableOpacity, View } from 'react-native';
+import React, { useState, memo } from 'react';
+import { ActivityIndicator, Modal, TouchableOpacity, View } from 'react-native';
+import { useMutation } from '@apollo/react-hooks';
+import { useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
+import { SEND_MAIL } from './gql';
+
+// store
+import { Actions } from '../../store/mail/actions';
 
 import styles from './styles';
 
-const Mail = () => {
+const Mail = memo(() => {
+  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [message, setMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+
+  const [sendMail, { loading }] = useMutation(SEND_MAIL);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
 
   const hendleSendMail = () => {
-    if (message) {
-      setModalVisible(false);
+    if (message && email && username) {
+      sendMail({
+        variables: {
+          input: {
+            from: email.trim(),
+            name: username.trim(),
+            text: message.trim(),
+          },
+        },
+      })
+        .then(() => {
+          dispatch(Actions.sendMail());
+
+          setMessage('');
+          setEmail('');
+          setUsername('');
+
+          setModalVisible(false);
+        })
+        .catch(e => {
+          dispatch(Actions.sendMailFailure(e.message));
+        });
     }
-    setMessage('');
   };
 
   return (
@@ -30,11 +60,33 @@ const Mail = () => {
         onRequestClose={toggleModal}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <TouchableOpacity style={styles.closeBtn} onPress={toggleModal}>
-              <Icon name='close' size={24} color='red' />
-            </TouchableOpacity>
+            <View style={styles.formHeader}>
+              <View>
+                {loading && <ActivityIndicator size='small' color='#00ff00' />}
+              </View>
+              <TouchableOpacity style={styles.closeBtn} onPress={toggleModal}>
+                <Icon name='close' size={24} color='red' />
+              </TouchableOpacity>
+            </View>
             {/**/}
             <View style={styles.form}>
+              {/* =============   USERNAME  ======================== */}
+              <Input
+                placeholder='имя'
+                // style={styles.messageInput}
+                value={username}
+                leftIcon={{ type: 'font-awesome', name: 'user' }}
+                onChangeText={setUsername}
+              />
+              {/* ======================== EMAIL  ====== */}
+              <Input
+                placeholder='email'
+                keyboardType='email-address'
+                value={email}
+                leftIcon={{ type: 'font-awesome', name: 'at' }}
+                onChangeText={setEmail}
+              />
+              {/* =================== MESSAGE  ================= */}
               <Input
                 placeholder='сообщение'
                 // style={styles.messageInput}
@@ -58,6 +110,6 @@ const Mail = () => {
       </TouchableOpacity>
     </View>
   );
-};
+});
 
 export default Mail;
