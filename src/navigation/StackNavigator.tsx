@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import AppHeaderButton from '../shared/components/AppHeaderButton/AppHeaderButton';
-import { COLORS } from '../shared/constants/colors';
 import FilmsScreen from '../screens/FilmsScreen/FilmsScreen';
 import SerialsScreen from '../screens/SerialsScreen/SerialsScreen';
 import ShowScreen from '../screens/ShowScreen/ShowScreen';
@@ -15,12 +15,7 @@ import WrappStackNavigator from './WrappStackNavigator';
 const Stack = createStackNavigator();
 
 const appHeaderButton = (navigation: any) => (
-  <AppHeaderButton
-    onPress={navigation.toggleDrawer}
-    name='ios-menu'
-    raised
-    color={COLORS.MENU_COLOR}
-  />
+  <AppHeaderButton onPress={navigation.toggleDrawer} />
 );
 
 export const FilmsNavigator = () => {

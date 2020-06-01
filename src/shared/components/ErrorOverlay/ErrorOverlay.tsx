@@ -25,6 +25,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: '#8b0000',
   },
+  backDrop: {
+    backgroundColor: 'rgba(255, 255, 255, .5)',
+  },
+  overLay: {
+    backgroundColor: '#808080',
+  },
 });
 
 interface IProps {
@@ -60,22 +66,23 @@ const ErrorOverlay: React.FC<Props> = ({
     setIsVisible(false);
     clearError();
     clearSettingsError();
-  }, [clearError]);
+  }, [clearError, clearSettingsError]);
 
   const sendIssue = useCallback(() => {
     setLoading(true);
+
     console.log('send issue: ', { message, locationError });
     setTimeout(() => {
       setLoading(false);
       setIsSendDone(true);
       setTitleText('Отчёт отправлен.');
     }, 2000);
-  }, [message]);
+  }, [message, locationError]);
 
   return (
     <Overlay
-      windowBackgroundColor='rgba(255, 255, 255, .5)'
-      overlayBackgroundColor='#808080'
+      backdropStyle={styles.backDrop}
+      overlayStyle={styles.overLay}
       onBackdropPress={closeOverlay}
       isVisible={isVisible}>
       <View style={styles.container}>

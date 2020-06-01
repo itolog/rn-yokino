@@ -10,30 +10,35 @@ export type Scalars = {
 };
 
 export type Collection = {
-   __typename?: 'Collection';
+  __typename?: 'Collection';
   id?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
 };
 
 export type Envelope = {
-   __typename?: 'Envelope';
+  __typename?: 'Envelope';
   from?: Maybe<Scalars['String']>;
   to?: Maybe<Array<Scalars['String']>>;
 };
 
 export type Episodes = {
-   __typename?: 'Episodes';
+  __typename?: 'Episodes';
   episode?: Maybe<Scalars['Float']>;
   iframe_url?: Maybe<Scalars['String']>;
 };
 
+export type IdUser = {
+  __typename?: 'IdUser';
+  id: Scalars['String'];
+};
+
 export type LastUpdate = {
-   __typename?: 'LastUpdate';
+  __typename?: 'LastUpdate';
   items?: Maybe<Array<LastUpdateItems>>;
 };
 
 export type LastUpdateItems = {
-   __typename?: 'LastUpdateItems';
+  __typename?: 'LastUpdateItems';
   id?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
   origin_name?: Maybe<Scalars['String']>;
@@ -57,7 +62,7 @@ export type MailInput = {
 };
 
 export type MailModel = {
-   __typename?: 'MailModel';
+  __typename?: 'MailModel';
   accepted?: Maybe<Array<Scalars['String']>>;
   envelopeTime?: Maybe<Scalars['Float']>;
   messageTime?: Maybe<Scalars['Float']>;
@@ -68,7 +73,7 @@ export type MailModel = {
 };
 
 export type Movie = {
-   __typename?: 'Movie';
+  __typename?: 'Movie';
   id?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
   origin_name?: Maybe<Scalars['String']>;
@@ -87,7 +92,7 @@ export type Movie = {
 };
 
 export type MovieInfo = {
-   __typename?: 'MovieInfo';
+  __typename?: 'MovieInfo';
   id?: Maybe<Scalars['Float']>;
   iframe_url?: Maybe<Scalars['String']>;
   imdb?: Maybe<Scalars['String']>;
@@ -113,7 +118,7 @@ export type MovieInfo = {
 };
 
 export type Movies = {
-   __typename?: 'Movies';
+  __typename?: 'Movies';
   total: Scalars['Int'];
   prev_page?: Maybe<Scalars['String']>;
   next_page?: Maybe<Scalars['String']>;
@@ -121,8 +126,11 @@ export type Movies = {
 };
 
 export type Mutation = {
-   __typename?: 'Mutation';
+  __typename?: 'Mutation';
   sendEmail: MailModel;
+  deleteUser: IdUser;
+  dropAllUser: Scalars['String'];
+  registration: UsersDto;
 };
 
 
@@ -130,8 +138,18 @@ export type MutationSendEmailArgs = {
   data: MailInput;
 };
 
+
+export type MutationDeleteUserArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationRegistrationArgs = {
+  data: UserInput;
+};
+
 export type NowPlaying = {
-   __typename?: 'NowPlaying';
+  __typename?: 'NowPlaying';
   id?: Maybe<Scalars['Float']>;
   poster_path?: Maybe<Scalars['String']>;
   backdrop_path?: Maybe<Scalars['String']>;
@@ -139,7 +157,7 @@ export type NowPlaying = {
 };
 
 export type Query = {
-   __typename?: 'Query';
+  __typename?: 'Query';
   movies: Movies;
   serials: Movies;
   cartoon: Movies;
@@ -154,6 +172,9 @@ export type Query = {
   nowPlaying: Array<NowPlaying>;
   collection: Array<Collection>;
   getCollections: Movies;
+  getAllUsers: Array<UsersDto>;
+  findUser: UsersDto;
+  login: UserLoginDto;
 };
 
 
@@ -221,8 +242,19 @@ export type QueryGetCollectionsArgs = {
   id: Scalars['Float'];
 };
 
+
+export type QueryFindUserArgs = {
+  name: Scalars['String'];
+};
+
+
+export type QueryLoginArgs = {
+  pass: Scalars['String'];
+  username: Scalars['String'];
+};
+
 export type Seasons = {
-   __typename?: 'Seasons';
+  __typename?: 'Seasons';
   poster?: Maybe<Scalars['String']>;
   iframe_url?: Maybe<Scalars['String']>;
   season?: Maybe<Scalars['Float']>;
@@ -230,11 +262,37 @@ export type Seasons = {
 };
 
 export type Trailers = {
-   __typename?: 'Trailers';
+  __typename?: 'Trailers';
   number?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   season?: Maybe<Scalars['Float']>;
   iframe_url?: Maybe<Scalars['String']>;
+};
+
+export type UserInput = {
+  name: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+  role?: Maybe<Scalars['String']>;
+};
+
+export type UserLoginDto = {
+  __typename?: 'UserLoginDto';
+  id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  role?: Maybe<Scalars['String']>;
+  banned?: Maybe<Scalars['Boolean']>;
+  access_token: Scalars['String'];
+};
+
+export type UsersDto = {
+  __typename?: 'UsersDto';
+  id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  role?: Maybe<Scalars['String']>;
+  banned?: Maybe<Scalars['Boolean']>;
 };
 
 

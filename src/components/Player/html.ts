@@ -1,4 +1,4 @@
-const html = (src: any) => {
+const html = (src: string) => {
   return `
   <html lang="en">
 <head>
