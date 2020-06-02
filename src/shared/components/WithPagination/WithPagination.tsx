@@ -18,7 +18,7 @@ import { Movie, Movies } from '../../generated/graphql';
 import YearPicker from '../../../components/YearPicker/YearPicker';
 import GenrePicker from '../../../components/GenrePicker/GenrePicker';
 import BgImage from '../../UI/BgImage/BgImage';
-import HeaderAnimView from '../../animation/HeaderAnimView';
+import FadeAnimView from '../../animation/FadeAnimView';
 import ActionHeader from '../../../components/ActionHeader/ActionHeader';
 
 import styles from './styles';
@@ -188,7 +188,7 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
         {/* SEARCH MODAl */}
         {preferences ? (
           <View>
-            <HeaderAnimView>
+            <FadeAnimView>
               <SearchBar
                 containerStyle={styles.searchBar}
                 placeholder='поиск ...'
@@ -201,7 +201,7 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
                 <YearPicker movieYear={movieYear} setMovieYear={setYear} />
                 <GenrePicker movieGenre={movieGenre} setMovieGenre={setGenre} />
               </View>
-            </HeaderAnimView>
+            </FadeAnimView>
           </View>
         ) : null}
         <InfiniteList

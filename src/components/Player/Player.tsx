@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { CheckBox } from 'react-native-elements';
+import { WebViewProgressEvent } from 'react-native-webview/lib/WebViewTypes';
 import { COLORS } from '../../shared/constants/colors';
 import html from './html';
 
@@ -57,6 +58,11 @@ const Player: React.FC<Props> = ({ src = '', id }) => {
     );
   };
 
+  const handleOnLoad = (event: WebViewProgressEvent) => {
+    const { nativeEvent } = event;
+    setProgress(nativeEvent.progress);
+  };
+
   return (
     <View style={styles.container}>
       <CheckBox
@@ -78,9 +84,7 @@ const Player: React.FC<Props> = ({ src = '', id }) => {
           source={{
             html: html(`https://yokino-api.herokuapp.com/player?src=${src}`),
           }}
-          onLoadProgress={({ nativeEvent }) => {
-            setProgress(nativeEvent.progress);
-          }}
+          onLoadProgress={handleOnLoad}
         />
       ) : (
         <WebView
@@ -92,9 +96,7 @@ const Player: React.FC<Props> = ({ src = '', id }) => {
           source={{
             html: html(`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`),
           }}
-          onLoadProgress={({ nativeEvent }) => {
-            setProgress(nativeEvent.progress);
-          }}
+          onLoadProgress={handleOnLoad}
         />
       )}
     </View>

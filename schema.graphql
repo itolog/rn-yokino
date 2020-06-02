@@ -20,6 +20,10 @@ type Episodes {
     iframe_url: String
 }
 
+type IdUser {
+    id: String!
+}
+
 type LastUpdate {
     items: [LastUpdateItems!]
 }
@@ -102,6 +106,9 @@ type Movies {
 }
 
 type Mutation {
+    deleteUser(id: String!): IdUser!
+    dropAllUser: String!
+    registration(data: UserInput!): UsersDto!
     sendEmail(data: MailInput!): MailModel!
 }
 
@@ -118,9 +125,12 @@ type Query {
     cartoon(genre_id: Float!, page: Float!, year: Float!): Movies!
     cartoonSerials(genre_id: Float!, page: Float!, year: Float!): Movies!
     collection: [Collection!]!
+    findUser(name: String!): UsersDto!
+    getAllUsers: [UsersDto!]!
     getCollections(id: Float!, page: Float!): Movies!
     lastUpdate: LastUpdate!
     listForCarousel: Movies!
+    login(pass: String!, username: String!): UserLoginDto!
     movieInfo(id: Float!): MovieInfo!
     movies(genre_id: Float!, page: Float!, year: Float!): Movies!
     nowPlaying: [NowPlaying!]!
@@ -143,8 +153,32 @@ type Trailers {
     season: Float
 }
 
+type UserLoginDto {
+    access_token: String!
+    banned: Boolean
+    email: String
+    id: String!
+    name: String
+    role: String
+}
+
+type UsersDto {
+    banned: Boolean
+    email: String
+    id: String!
+    name: String
+    role: String
+}
+
 input MailInput {
     from: String!
     name: String!
     text: String!
+}
+
+input UserInput {
+    email: String!
+    name: String!
+    password: String!
+    role: String
 }

@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useRef, useState, useEffect } from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -6,13 +6,13 @@ import {
   Text,
   View,
   StatusBar,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
+  Dimensions,
+  ScaledSize,
 } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 
-import { Button } from 'react-native-elements';
+import MovieDetailsHeader from './MovieDetailsHeader/MovieDetailsHeader';
 import ErrorBox from '../../shared/components/ErrorBox/ErrorBox';
 import VideoInfo from '../../components/VideoInfo/VideoInfo';
 import Player from '../../components/Player/Player';
@@ -36,6 +36,8 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
   const navigation = useNavigation();
 
   const [isStatusBarHide, setIsStatusBarHide] = useState(false);
+  const [deviceWidth] = useState<number>(Dimensions.get('screen').width);
+
   const ref = useRef<ScrollView>(null);
   const id = Number(route.params?.id);
 
@@ -58,39 +60,43 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
     }
   };
 
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { nativeEvent } = event;
-    requestAnimationFrame(() => {
-      if (nativeEvent.contentOffset.y > 200) {
-        setIsStatusBarHide(true);
-      } else if (nativeEvent.contentOffset.y < 200) {
-        setIsStatusBarHide(false);
-      }
-    });
-  };
-
   const handleBack = () => {
     requestAnimationFrame(() => {
       navigation.goBack();
     });
   };
 
+  useEffect(() => {
+    const orientationHandler = ({ screen }: { screen: ScaledSize }) => {
+      if (screen.width > deviceWidth) {
+        setIsStatusBarHide(true);
+      } else {
+        setIsStatusBarHide(false);
+      }
+    };
+
+    Dimensions.addEventListener('change', orientationHandler);
+
+    return () => {
+      Dimensions.removeEventListener('change', orientationHandler);
+    };
+  }, [deviceWidth]);
+
   const content = () => {
     if (error) {
       return <ErrorBox msg={error?.message} />;
     }
     return (
-      <ScrollView ref={ref} onScroll={handleScroll}>
+      <ScrollView ref={ref}>
         {!loading ? (
           <>
-            <Button
-              title='НАЗАД'
-              onPress={handleBack}
-              buttonStyle={styles.backBtn}
+            <MovieDetailsHeader
+              title={movie.name ?? ''}
+              backHandler={handleBack}
             />
-
-            <VideoInfo data={movie} />
-            <Player src={movie?.iframe_url} id={movie?.kinopoisk_id} />
+            <VideoInfo data={movie}>
+              <Player src={movie?.iframe_url} id={movie?.kinopoisk_id} />
+            </VideoInfo>
 
             {!!PartsList()?.length && (
               <View style={styles.partsContainer}>
@@ -114,7 +120,7 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar hidden={isStatusBarHide} />
+      <StatusBar hidden={isStatusBarHide} translucent={isStatusBarHide} />
       {content()}
     </SafeAreaView>
   );

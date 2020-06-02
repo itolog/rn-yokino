@@ -71,9 +71,9 @@ const styles = StyleSheet.create({
   img: { width: '100%', height: 250 },
   favorites: {
     width: '100%',
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'flex-end',
     marginRight: 20,
   },

@@ -21,6 +21,7 @@ import { Favorites } from '../../shared/interface/favorites';
 
 interface IProps {
   data: MovieInfo;
+  children: React.ReactElement | React.ReactElement[];
 }
 
 const mapStateToProps = (state: AppState) => {
@@ -49,6 +50,7 @@ const VideoInfo: React.FC<Props> = ({
   removeMovie,
   favoriteMoviesIds,
   errorFavorites,
+  children,
 }) => {
   const [favorites, setFavorites] = useState(false);
 
@@ -163,6 +165,9 @@ const VideoInfo: React.FC<Props> = ({
         style={styles.img}
         PlaceholderContent={<ActivityIndicator />}
       />
+
+      {/* PLAYER */}
+      {children}
       {toggleFavorite()}
       {/* Title */}
       <IsEmpty val={data.name}>

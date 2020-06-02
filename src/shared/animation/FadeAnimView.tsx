@@ -3,21 +3,19 @@ import { Animated, Dimensions, Easing } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../store/createStore';
 
-import { THEMES } from '../constants/themes';
 import { COLORS } from '../constants/colors';
 
 interface Props {
   children: JSX.Element[] | JSX.Element;
 }
 
-const HeaderAnimView: React.FC<Props> = React.memo(({ children }) => {
+const FadeAnimView: React.FC<Props> = React.memo(({ children }) => {
   const [fadeAnim] = useState(new Animated.Value(0));
-  const [height] = useState(new Animated.Value(THEMES.HEADER_SIZE));
   const isHide = useSelector(
     (state: AppState) => state.animState.isHeaderVisible,
   );
 
-  const DURATION = 500;
+  const DURATION = 300;
 
   useEffect(() => {
     if (isHide) {
@@ -25,14 +23,8 @@ const HeaderAnimView: React.FC<Props> = React.memo(({ children }) => {
         Animated.timing(fadeAnim, {
           toValue: 1,
           duration: DURATION,
-          easing: Easing.bounce,
-          useNativeDriver: false,
-        }),
-        Animated.timing(height, {
-          toValue: 150,
-          duration: DURATION,
-          easing: Easing.bounce,
-          useNativeDriver: false,
+          easing: Easing.ease,
+          useNativeDriver: true,
         }),
       ]).start();
     } else {
@@ -40,16 +32,11 @@ const HeaderAnimView: React.FC<Props> = React.memo(({ children }) => {
         Animated.timing(fadeAnim, {
           toValue: 0,
           duration: DURATION,
-          useNativeDriver: false,
-        }),
-        Animated.timing(height, {
-          toValue: 0,
-          duration: DURATION,
-          useNativeDriver: false,
+          useNativeDriver: true,
         }),
       ]).start();
     }
-  }, [fadeAnim, isHide, height]);
+  }, [fadeAnim, isHide]);
 
   return (
     <Animated.View
@@ -64,9 +51,9 @@ const HeaderAnimView: React.FC<Props> = React.memo(({ children }) => {
         height: Dimensions.get('window').height,
         transform: [
           {
-            translateY: fadeAnim.interpolate({
+            scale: fadeAnim.interpolate({
               inputRange: [0, 1],
-              outputRange: [-THEMES.HEADER_SIZE, 0],
+              outputRange: [0, 1],
             }),
           },
         ],
@@ -76,4 +63,4 @@ const HeaderAnimView: React.FC<Props> = React.memo(({ children }) => {
   );
 });
 
-export default HeaderAnimView;
+export default FadeAnimView;

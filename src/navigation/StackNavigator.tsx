@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import AppHeaderButton from '../shared/components/AppHeaderButton/AppHeaderButton';
+import AppHeaderButton from './AppHeaderButton/AppHeaderButton';
 import FilmsScreen from '../screens/FilmsScreen/FilmsScreen';
 import SerialsScreen from '../screens/SerialsScreen/SerialsScreen';
 import ShowScreen from '../screens/ShowScreen/ShowScreen';
