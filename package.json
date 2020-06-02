@@ -21,6 +21,7 @@
     "@react-navigation/stack": "^5.4.1",
     "@types/lodash.uniqby": "^4.7.6",
     "apollo-boost": "^0.4.9",
+    "formik": "^2.1.4",
     "graphql": "^14.6.0",
     "lodash.uniqby": "^4.7.0",
     "react": "16.11.0",
@@ -41,7 +42,8 @@
     "redux-observable": "^1.2.0",
     "reselect": "^4.0.0",
     "rxjs": "^6.5.5",
-    "typesafe-actions": "^5.1.0"
+    "typesafe-actions": "^5.1.0",
+    "yup": "^0.29.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
@@ -58,6 +60,7 @@
     "@types/react-native-vector-icons": "^6.4.5",
     "@types/react-redux": "^7.1.9",
     "@types/react-test-renderer": "^16.9.2",
+    "@types/yup": "^0.29.1",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "babel-jest": "^25.5.1",

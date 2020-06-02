@@ -9,6 +9,7 @@ import AnimeScreen from '../screens/AnimeScreen/AnimeScreen';
 import AnimeSerialsScreen from '../screens/AnimeSerialsScreen/AnimeSerialsScreen';
 import CartoonScreen from '../screens/CartoonScreen/CartoonScreen';
 import CartoonSerialsScreen from '../screens/CartoonSerialsScreen/CartoonSerialsScreen';
+import AuthScreen from '../screens/AuthScreen/AuthScreen';
 
 import WrappStackNavigator from './WrappStackNavigator';
 
@@ -26,6 +27,20 @@ export const FilmsNavigator = () => {
         component={FilmsScreen}
         options={({ navigation }) => ({
           title: 'Фильмы',
+          headerRight: () => appHeaderButton(navigation),
+        })}
+      />
+    </WrappStackNavigator>
+  );
+};
+export const AuthNavigator = () => {
+  return (
+    <WrappStackNavigator name='Auth'>
+      <Stack.Screen
+        name='Auth'
+        component={AuthScreen}
+        options={({ navigation }) => ({
+          title: 'Авторизация',
           headerRight: () => appHeaderButton(navigation),
         })}
       />
