@@ -9,6 +9,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 4,
   },
+  formHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 40,
+  },
   loginTitle: {
     color: 'white',
   },
@@ -23,9 +28,10 @@ const styles = StyleSheet.create({
   messageInput: {
     color: '#fff',
   },
-  sendButton: {
-    alignSelf: 'center',
-    backgroundColor: 'transparent',
+  wrappError: {
+    position: 'relative',
+    width: '100%',
+    height: 10,
   },
 });
 

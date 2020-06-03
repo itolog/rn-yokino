@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, memo, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-elements';
 
+import AsyncStorage from '@react-native-community/async-storage';
 import LogIn from '../../components/Auth/LogIn/LogIn';
 import Registration from '../../components/Auth/Registration/Registration';
 
@@ -30,13 +31,26 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-const AuthScreen = () => {
+const AuthScreen = memo(() => {
   const [visible, setVisible] = useState(true);
 
   const toggleVisible = useCallback(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     setVisible(!visible);
   }, [visible]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const value = await AsyncStorage.getItem('@user');
+        if (value !== null) {
+          console.log(value);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
 
   return (
     <SafeAreaView>
@@ -52,6 +66,6 @@ const AuthScreen = () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 export default AuthScreen;

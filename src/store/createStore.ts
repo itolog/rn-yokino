@@ -25,10 +25,16 @@ import { reducer as animationReducer } from './animation/reducer';
 import { ActionTypeUnion as HeaderActionsType } from './header/actions';
 import { reducer as headerReducer } from './header/reducer';
 
+// import User
+import { ActionTypeUnion as UserActionType } from './user/actions';
+import { reducer as userReducer } from './user/reducer';
+import { epics as userEpic } from './user/epics';
+
 const rootEpic = combineEpics(
   ...netInfoEpics,
   ...favoritesEpics,
   ...settingsEpic,
+  ...userEpic,
 );
 const epicMiddleware = createEpicMiddleware();
 
@@ -39,6 +45,7 @@ const reducer = combineReducers({
   settings: settingsReducer,
   animState: animationReducer,
   header: headerReducer,
+  user: userReducer,
 });
 
 export type RootActions = ActionType<
@@ -47,6 +54,7 @@ export type RootActions = ActionType<
   | SettingsActionType
   | AnimationActionType
   | HeaderActionsType
+  | UserActionType
 >;
 
 export type AppState = StateType<typeof reducer>;

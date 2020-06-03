@@ -1,15 +1,10 @@
 import React from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Keyboard,
-  Platform,
-} from 'react-native';
+import { Text, KeyboardAvoidingView, Keyboard, Platform } from 'react-native';
 
 import { Input } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { Formik } from 'formik';
+
+import AuthButton from '../components/AuthButton/AuthButton';
 import SignupSchema from './validation';
 import styles from '../styles';
 import { Values } from './types';
@@ -75,9 +70,7 @@ const Registration = () => {
             leftIcon={{ type: 'font-awesome', name: 'key', color: 'white' }}
           />
 
-          <TouchableOpacity style={styles.sendButton} onPress={handleSubmit}>
-            <Icon name='send' size={40} color='#fff' />
-          </TouchableOpacity>
+          <AuthButton loading={false} onSubmit={handleSubmit} />
         </KeyboardAvoidingView>
       )}
     </Formik>
