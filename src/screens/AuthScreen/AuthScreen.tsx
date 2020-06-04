@@ -9,11 +9,12 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import { useSelector } from 'react-redux';
 import LogIn from '../../components/Auth/LogIn/LogIn';
 import Registration from '../../components/Auth/Registration/Registration';
 
 import { THEMES } from '../../shared/constants/themes';
+import { AppState } from '../../store/createStore';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,6 +33,7 @@ if (
 }
 
 const AuthScreen = memo(() => {
+  const user = useSelector((state: AppState) => state.user);
   const [visible, setVisible] = useState(true);
 
   const toggleVisible = useCallback(() => {
@@ -40,17 +42,8 @@ const AuthScreen = memo(() => {
   }, [visible]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const value = await AsyncStorage.getItem('@user');
-        if (value !== null) {
-          console.log(value);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, []);
+    console.log(user);
+  }, [user]);
 
   return (
     <SafeAreaView>

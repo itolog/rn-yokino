@@ -4,19 +4,25 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS } from '../../shared/constants/colors';
 
 interface Props {
-  onPress: () => void;
+  name: string;
+  onPress: (props: any) => void;
+  color: string;
 }
 
 const styles = StyleSheet.create({
-  icon: { marginRight: 15 },
+  icon: {
+    marginRight: 15,
+    marginLeft: 15,
+  },
 });
 
 const AppHeaderIcon: React.FC<Props> = props => {
+  const { name, color } = props;
   return (
     <TouchableOpacity {...props}>
       <Icon
-        name='ios-menu'
-        color={COLORS.MENU_COLOR}
+        name={name}
+        color={color}
         iconStyle={styles.icon}
         size={36}
         type='ionicon'

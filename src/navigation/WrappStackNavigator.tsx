@@ -5,6 +5,7 @@ import MovieDetailsScreen from '../screens/MovieDetailsScreen/MovieDetailsScreen
 import FavoritesScreen from '../screens/FavoritesScreen/FavoritesScreen';
 import SettingsScreen from '../screens/SettingsScreen/SettingsScreen';
 import SearchScreen from '../screens/SearchScreen/SearchScreen';
+import AuthScreen from '../screens/AuthScreen/AuthScreen';
 
 import { COLORS } from '../shared/constants/colors';
 
@@ -60,6 +61,13 @@ const WrappStackNavigator: React.FC<Props> = ({ children, name }) => {
         component={SearchScreen}
         options={{
           title: 'Поиск',
+        }}
+      />
+      <Stack.Screen
+        name='Auth'
+        component={AuthScreen}
+        options={{
+          title: 'Авторизация',
         }}
       />
     </Stack.Navigator>

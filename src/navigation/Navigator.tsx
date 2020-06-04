@@ -15,7 +15,6 @@ import {
   FilmsNavigator,
   SerialsNavigator,
   ShowNavigator,
-  AuthNavigator,
 } from './StackNavigator';
 
 const Drawer = createDrawerNavigator();
@@ -40,21 +39,6 @@ const Navigator = () => {
           screenOptions={{
             unmountOnBlur: true,
           }}>
-          <Drawer.Screen
-            name='Auth'
-            component={AuthNavigator}
-            options={{
-              drawerLabel: 'Войти',
-              drawerIcon: () => (
-                <Icon
-                  name='ios-log-in'
-                  size={35}
-                  type='ionicon'
-                  color='#00BBD5'
-                />
-              ),
-            }}
-          />
           <Drawer.Screen
             name='Films'
             component={FilmsNavigator}
