@@ -22,10 +22,14 @@ const client = new ApolloClient({
 
 const App = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: userActionTypes.LOAD_USER });
+  }, [dispatch]);
+
   useEffect(() => {
     bootstrap().then(() => {
       dispatch({ type: ActionTypes.GET_IMG_PATH });
-      dispatch({ type: userActionTypes.LOAD_USER });
     });
   }, [dispatch]);
 

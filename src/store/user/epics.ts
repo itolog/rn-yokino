@@ -1,5 +1,5 @@
 import { Epic, ofType } from 'redux-observable';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 import { catchError, map, switchMap } from 'rxjs/operators';
 import AsyncStorageService from './asyncStorage.service';
@@ -46,8 +46,11 @@ const loadUserEpic: Epic = action$ =>
     switchMap(() => {
       return asyncStorage.getUser();
     }),
-    switchMap(res => {
-      return of(Actions.setUserSuccess(res));
+    switchMap(user => {
+      if (user) {
+        return of(Actions.setUserSuccess(user));
+      }
+      return EMPTY;
     }),
     catchError(e =>
       of(Actions.setUserFailure(`error load user: ${e.message}`)),

@@ -1,23 +1,34 @@
 import React, { useState, memo } from 'react';
-import { ActivityIndicator, Modal, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Modal,
+  TouchableOpacity,
+  View,
+  Text,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input } from 'react-native-elements';
+import { Input, Button } from 'react-native-elements';
 import { SEND_MAIL } from './gql';
 
 // store
 import { Actions } from '../../store/mail/actions';
+import { getUser, isUserLogged } from '../../store/user/selectors';
 
 import styles from './styles';
 
 const Mail = memo(() => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const user = useSelector(getUser);
+  const isLogIn = useSelector(isUserLogged);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [message, setMessage] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
 
   const [sendMail, { loading }] = useMutation(SEND_MAIL);
 
@@ -25,13 +36,20 @@ const Mail = memo(() => {
     setModalVisible(!modalVisible);
   };
 
+  const toAuth = () => {
+    requestAnimationFrame(() => {
+      setModalVisible(false);
+      navigation.navigate('Auth');
+    });
+  };
+
   const hendleSendMail = () => {
-    if (message && email && username) {
+    if (message) {
       sendMail({
         variables: {
           input: {
-            from: email.trim(),
-            name: username.trim(),
+            from: user?.email,
+            name: user?.name,
             text: message.trim(),
           },
         },
@@ -40,8 +58,6 @@ const Mail = memo(() => {
           dispatch(Actions.sendMail());
 
           setMessage('');
-          setEmail('');
-          setUsername('');
 
           setModalVisible(false);
         })
@@ -69,38 +85,34 @@ const Mail = memo(() => {
               </TouchableOpacity>
             </View>
             {/**/}
-            <View style={styles.form}>
-              {/* =============   USERNAME  ======================== */}
-              <Input
-                placeholder='имя'
-                // style={styles.messageInput}
-                value={username}
-                leftIcon={{ type: 'font-awesome', name: 'user' }}
-                onChangeText={setUsername}
-              />
-              {/* ======================== EMAIL  ====== */}
-              <Input
-                placeholder='email'
-                keyboardType='email-address'
-                value={email}
-                leftIcon={{ type: 'font-awesome', name: 'at' }}
-                onChangeText={setEmail}
-              />
-              {/* =================== MESSAGE  ================= */}
-              <Input
-                placeholder='сообщение'
-                // style={styles.messageInput}
-                value={message}
-                leftIcon={{ type: 'font-awesome', name: 'comment' }}
-                onChangeText={setMessage}
-              />
+            {isLogIn ? (
+              <View style={styles.form}>
+                <Input
+                  placeholder='сообщение'
+                  // style={styles.messageInput}
+                  value={message}
+                  leftIcon={{ type: 'font-awesome', name: 'comment' }}
+                  onChangeText={setMessage}
+                />
 
-              <TouchableOpacity
-                style={styles.sendButton}
-                onPress={hendleSendMail}>
-                <Icon name='send' size={40} color='#F194FF' />
-              </TouchableOpacity>
-            </View>
+                <TouchableOpacity
+                  style={styles.sendButton}
+                  onPress={hendleSendMail}>
+                  <Icon name='send' size={40} color='#F194FF' />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View>
+                <Text style={styles.nonLoginTitle}>
+                  Войдите в аккаунт, чтобы написать
+                </Text>
+
+                <Button
+                  onPress={toAuth}
+                  icon={<Icon name='sign-in' size={35} color='white' />}
+                />
+              </View>
+            )}
           </View>
         </View>
       </Modal>

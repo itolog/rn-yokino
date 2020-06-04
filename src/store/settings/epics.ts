@@ -1,7 +1,7 @@
 import { Epic, ofType } from 'redux-observable';
 import { of } from 'rxjs';
 
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, pluck, switchMap } from 'rxjs/operators';
 
 import DbSettingsService from './db-settings.service';
 import { THEMES } from '../../shared/constants/themes';
@@ -36,9 +36,7 @@ const resetImagePathEpic: Epic = action$ =>
         }),
         catchError(() => {
           console.log('Ошибка сброса картинки фона');
-          return of(
-            Actions.resetImageFailure('Ошибка сброса картинки фона'),
-          );
+          return of(Actions.resetImageFailure('Ошибка сброса картинки фона'));
         }),
       );
     }),
@@ -49,8 +47,10 @@ const getImagePathEpic: Epic = action$ =>
     ofType(ActionTypes.GET_IMG_PATH),
     switchMap(() => {
       return DbSettingsService.getSettings().pipe(
+        pluck('0', 'imagePath'),
         map(res => {
-          return Actions.getImgPathSuccess(res[0].imagePath);
+          const path = res as string;
+          return Actions.getImgPathSuccess(path);
         }),
         catchError(() => {
           console.log('Ошибка загрузки картинки');

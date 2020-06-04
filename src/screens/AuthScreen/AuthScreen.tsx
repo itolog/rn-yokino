@@ -1,4 +1,4 @@
-import React, { useCallback, useState, memo, useEffect } from 'react';
+import React, { useCallback, useState, memo } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -9,12 +9,10 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { useSelector } from 'react-redux';
 import LogIn from '../../components/Auth/LogIn/LogIn';
 import Registration from '../../components/Auth/Registration/Registration';
 
 import { THEMES } from '../../shared/constants/themes';
-import { AppState } from '../../store/createStore';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,17 +31,12 @@ if (
 }
 
 const AuthScreen = memo(() => {
-  const user = useSelector((state: AppState) => state.user);
   const [visible, setVisible] = useState(true);
 
   const toggleVisible = useCallback(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     setVisible(!visible);
   }, [visible]);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <SafeAreaView>

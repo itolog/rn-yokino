@@ -1,7 +1,6 @@
 import React from 'react';
 import { Icon } from 'react-native-elements';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { COLORS } from '../../shared/constants/colors';
 
 interface Props {
   name: string;

@@ -61,6 +61,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  nonLoginTitle: {
+    width: '100%',
+  },
 });
 
 export default styles;

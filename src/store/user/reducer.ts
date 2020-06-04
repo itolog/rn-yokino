@@ -2,7 +2,7 @@ import { ActionTypes, ActionTypeUnion } from './actions';
 import { UserState } from './types';
 
 const initialState: UserState = {
-  user: {},
+  user: null,
   isLogged: false,
   error: null,
 };
@@ -28,7 +28,7 @@ export function reducer(
     case ActionTypes.REMOVE_USER_SUCCESS: {
       return {
         error: null,
-        user: {},
+        user: null,
         isLogged: false,
       };
     }
