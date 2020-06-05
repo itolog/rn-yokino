@@ -26,4 +26,4 @@ class AsyncStorageService {
   }
 }
 
-export default AsyncStorageService;
+export const asyncStorageService = new AsyncStorageService();

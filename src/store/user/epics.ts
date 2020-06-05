@@ -2,12 +2,10 @@ import { Epic, ofType } from 'redux-observable';
 import { EMPTY, of } from 'rxjs';
 
 import { catchError, map, switchMap } from 'rxjs/operators';
-import AsyncStorageService from './asyncStorage.service';
+import { asyncStorageService } from './asyncStorage.service';
 
 import { Actions, ActionTypes } from './actions';
 import { UserLoginDto } from '../../shared/generated/graphql';
-
-const asyncStorage = new AsyncStorageService();
 
 interface IPayload {
   payload: UserLoginDto;
@@ -18,7 +16,7 @@ const setUserEpic: Epic = action$ =>
     ofType(ActionTypes.SET_USER),
     switchMap(({ payload }: IPayload) => {
       delete payload.__typename;
-      return asyncStorage.setUser(payload).pipe(map(() => payload));
+      return asyncStorageService.setUser(payload).pipe(map(() => payload));
     }),
     switchMap(res => {
       return of(Actions.setUserSuccess(res));
@@ -33,7 +31,7 @@ const setUserEpic: Epic = action$ =>
 const removeUserEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.REMOVE_USER),
-    switchMap(() => asyncStorage.deleteUser()),
+    switchMap(() => asyncStorageService.deleteUser()),
     switchMap(() => of(Actions.removeUserSuccess())),
     catchError(e =>
       of(Actions.removeUserFailure(`remove user error: ${e.message}`)),
@@ -44,7 +42,7 @@ const loadUserEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.LOAD_USER),
     switchMap(() => {
-      return asyncStorage.getUser();
+      return asyncStorageService.getUser();
     }),
     switchMap(user => {
       if (user) {

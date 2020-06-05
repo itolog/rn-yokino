@@ -5,7 +5,7 @@ const db = openDb();
 
 class DbService {
   // CREATE DB
-  static createDB(dbName: string, query: string): Promise<string> {
+  createDB(dbName: string, query: string): Promise<string> {
     return new Promise((resolve, reject) => {
       return db.transaction((tx: Transaction) => {
         return tx.executeSql(
@@ -22,7 +22,7 @@ class DbService {
   }
 
   // DROP DB
-  static dropDB(dbName: string) {
+  dropDB(dbName: string) {
     return new Promise((resolve, reject) =>
       db.transaction((tx: Transaction) => {
         tx.executeSql(
@@ -35,7 +35,7 @@ class DbService {
     );
   }
 
-  static save<T>(dbName: string, queryPayload: T): Promise<T[]> {
+  save<T>(dbName: string, queryPayload: T): Promise<T[]> {
     const args = Object.values(queryPayload);
     const payload = Object.keys(queryPayload);
     const payloadQuery = Object.keys(queryPayload).join();
@@ -57,7 +57,7 @@ class DbService {
     );
   }
 
-  static remove(dbName: string, id: number): Promise<number> {
+  remove(dbName: string, id: number): Promise<number> {
     return new Promise((resolve, reject) =>
       db.transaction((tx: Transaction) => {
         return tx.executeSql(
@@ -72,7 +72,7 @@ class DbService {
     );
   }
 
-  static updateOne<T, P>(dbName: string, queryPayload: P): Promise<T[]> {
+  updateOne<T, P>(dbName: string, queryPayload: P): Promise<T[]> {
     const payload = Object.values(queryPayload).join();
     const payloadQuery = Object.keys(queryPayload).join();
 
@@ -88,7 +88,7 @@ class DbService {
     );
   }
 
-  static getAll<T>(dbName: string): Promise<T[]> {
+  getAll<T>(dbName: string): Promise<T[]> {
     return new Promise((resolve, reject) =>
       db.transaction((tx: Transaction) => {
         tx.executeSql(
@@ -102,4 +102,4 @@ class DbService {
   }
 }
 
-export default DbService;
+export const dbService = new DbService();

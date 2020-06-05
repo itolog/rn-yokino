@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 
 import { catchError, map, pluck, switchMap } from 'rxjs/operators';
 
-import DbSettingsService from './db-settings.service';
+import { dbSettingsService } from './db-settings.service';
 import { THEMES } from '../../shared/constants/themes';
 
 import { Actions, ActionTypes } from './actions';
@@ -12,7 +12,7 @@ const setImagePathEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.SET_IMG_PATH),
     switchMap(({ payload }) => {
-      return DbSettingsService.updateImage(payload).pipe(
+      return dbSettingsService.updateImage(payload).pipe(
         map(() => {
           return Actions.setImgPathSuccess(payload);
         }),
@@ -30,7 +30,7 @@ const resetImagePathEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.RESET_IMG_PATH),
     switchMap(() => {
-      return DbSettingsService.updateImage(THEMES.DEFAULT_BG).pipe(
+      return dbSettingsService.updateImage(THEMES.DEFAULT_BG).pipe(
         map(() => {
           return Actions.resetImageSuccess();
         }),
@@ -46,7 +46,7 @@ const getImagePathEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.GET_IMG_PATH),
     switchMap(() => {
-      return DbSettingsService.getSettings().pipe(
+      return dbSettingsService.getSettings().pipe(
         pluck('0', 'imagePath'),
         map(res => {
           const path = res as string;

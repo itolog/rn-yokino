@@ -1,10 +1,10 @@
 import { Transaction, SQLError } from 'react-native-sqlite-storage';
+import { from, Observable } from 'rxjs';
 import { Settings } from '../../shared/interface/settings';
 import { THEMES } from '../../shared/constants/themes';
 
-import DbService from '../../shared/services/db.service';
+import { dbService } from '../../shared/services/db.service';
 import openDb from '../../shared/services/open-db';
-import { from, Observable } from 'rxjs';
 
 const db = openDb();
 
@@ -14,7 +14,7 @@ interface Payload {
 
 class DbSettingsService {
   // Create Setting DB and init default value if DB not exists
-  static async initSettingsDb() {
+  async initSettingsDb() {
     try {
       const createDbRes = await this.createSettingsDb();
       console.log(createDbRes);
@@ -29,25 +29,25 @@ class DbSettingsService {
     }
   }
 
-  static createSettingsDb() {
-    return DbService.createDB(
+  createSettingsDb() {
+    return dbService.createDB(
       'settings',
       'id integer primary key not null, imagePath text, theme text',
     );
   }
 
-  static save(imagePath: string, theme: string) {
-    return DbService.save<Settings>('settings', { imagePath, theme });
+  save(imagePath: string, theme: string) {
+    return dbService.save<Settings>('settings', { imagePath, theme });
   }
 
   // UPDATE IMAGE PATH
-  static updateImage(imagePath: string): Observable<Settings[] | any> {
+  updateImage(imagePath: string): Observable<Settings[] | any> {
     return from(
-      DbService.updateOne<Settings, Payload>('settings', { imagePath }),
+      dbService.updateOne<Settings, Payload>('settings', { imagePath }),
     );
   }
 
-  static remove(id: number) {
+  remove(id: number) {
     return new Promise((resolve, reject) =>
       db.transaction((tx: Transaction) => {
         tx.executeSql(
@@ -63,22 +63,9 @@ class DbSettingsService {
     );
   }
 
-  static getSettings(): Observable<Settings[]> {
-    return from(DbService.getAll<Settings>('settings'));
-    // return new Promise((resolve, reject) =>
-    //   db.transaction((tx: Transaction) =>
-    //     tx.executeSql(
-    //       'select * from settings',
-    //       [],
-    //       (_, { rows }) => resolve(rows.raw()),
-    //       (_: Transaction, error: SQLError) => {
-    //         console.log('error get settings DB', error.message);
-    //         return reject(error);
-    //       },
-    //     ),
-    //   ),
-    // );
+  getSettings(): Observable<Settings[]> {
+    return from(dbService.getAll<Settings>('settings'));
   }
 }
 
-export default DbSettingsService;
+export const dbSettingsService = new DbSettingsService();

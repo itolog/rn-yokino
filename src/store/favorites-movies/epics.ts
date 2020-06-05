@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 
 import { catchError, map, switchMap, take } from 'rxjs/operators';
 
-import DbFavoritesService from './db-favorites.service';
+import { dbFavoritesService } from './db-favorites.service';
 
 import { Actions, ActionTypes } from './actions';
 
@@ -11,7 +11,7 @@ const saveFavoriteMovieEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.SAVE_FAVORITE_MOVIE),
     switchMap(({ payload }) => {
-      return DbFavoritesService.saveFavorites(payload).pipe(
+      return dbFavoritesService.saveFavorites(payload).pipe(
         map(() => {
           return Actions.saveFavoriteMovieSuccess(payload);
         }),
@@ -30,7 +30,7 @@ const removeFavoriteMovieEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.REMOVE_FAVORITE_MOVIE),
     switchMap(({ payload }) => {
-      return DbFavoritesService.removeFavorites(payload).pipe(
+      return dbFavoritesService.removeFavorites(payload).pipe(
         map(id => {
           return Actions.removeFavoriteSuccess(Number(id));
         }),
@@ -49,7 +49,7 @@ const loadFavoriteMovieEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.LOAD_FAVORITE_MOVIE),
     switchMap(() => {
-      return DbFavoritesService.getFavorites().pipe(
+      return dbFavoritesService.getFavorites().pipe(
         map(res => {
           return Actions.loadFavoriteSuccess(res);
         }),

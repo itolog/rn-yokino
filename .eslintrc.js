@@ -13,6 +13,8 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    "import/named": "off",
+    "class-methods-use-this": "off",
     "camelcase": "off",
     "@typescript-eslint/camelcase": "off",
     'no-plusplus': 'off',
