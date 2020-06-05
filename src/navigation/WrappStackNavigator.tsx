@@ -31,6 +31,9 @@ const WrappStackNavigator: React.FC<Props> = ({ children, name }) => {
       headerMode='float'
       screenOptions={{
         headerTintColor: 'white',
+        headerTitleStyle: {
+          fontSize: 18,
+        },
         headerStyle: {
           backgroundColor: COLORS.MAIN_COLOR,
         },

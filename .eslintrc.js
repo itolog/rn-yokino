@@ -13,6 +13,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    "array-callback-return": "off",
     "import/named": "off",
     "class-methods-use-this": "off",
     "camelcase": "off",
