@@ -96,8 +96,7 @@ const Registration: React.FC<Props> = memo(({ setError }) => {
         <View style={styles.container}>
           <Text style={styles.loginTitle}>Регистрация</Text>
           <KeyboardAvoidingView
-            contentContainerStyle={styles.keyboarAvoid}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             {/* NAME */}
             <Input
               autoCapitalize='none'

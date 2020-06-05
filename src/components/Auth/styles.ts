@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { COLORS } from '../../shared/constants/colors';
-import { THEMES } from '../../shared/constants/themes';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,16 +29,6 @@ const styles = StyleSheet.create({
   messageInput: {
     color: '#fff',
   },
-  wrappError: {
-    position: 'relative',
-    top: 0,
-    left: 0,
-    right: 0,
-    width: '100%',
-    height: 10,
-    zIndex: 2000,
-  },
-  keyboarAvoid: { marginTop: THEMES.HEADER_SIZE },
 });
 
 export default styles;

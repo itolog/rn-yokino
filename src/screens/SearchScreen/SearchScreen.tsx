@@ -1,11 +1,8 @@
 import React from 'react';
 import { FlatList, Text } from 'react-native';
 import { Card } from 'react-native-elements';
-
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { useQuery } from '@apollo/react-hooks';
-
 import { RouteProp } from '@react-navigation/native';
 
 import styles from './styles';
@@ -52,7 +49,7 @@ const SearchScreen: React.FC<Props> = ({ route }) => {
   const emptyList = () => {
     return (
       <Card title='Список пуст'>
-        <Text>По запросу {search} не найдено совпадений !</Text>
+        <Text>По запросу `{search}` не найдено совпадений !</Text>
       </Card>
     );
   };

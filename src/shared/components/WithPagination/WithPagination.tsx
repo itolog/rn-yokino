@@ -171,6 +171,7 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
   const onSubmit = () => {
     if (search.length > 0) {
       navigation.navigate('Search', { search });
+      setPreferences(false);
     }
   };
 
