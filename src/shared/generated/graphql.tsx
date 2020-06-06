@@ -56,6 +56,7 @@ export type LastUpdateItems = {
 };
 
 export type MailInput = {
+  id: Scalars['String'];
   from: Scalars['String'];
   text: Scalars['String'];
   name: Scalars['String'];

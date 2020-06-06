@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ImageBackground, StyleSheet, Dimensions } from 'react-native';
+import { ImageBackground, StyleSheet } from 'react-native';
 
 // STORE
 import { AppState } from '../../../store/createStore';
@@ -8,7 +8,7 @@ import { getImagePath } from '../../../store/settings/selectors';
 
 const styles = StyleSheet.create({
   bgImg: {
-    height: Dimensions.get('window').height,
+    height: '100%',
   },
   image: {
     resizeMode: 'cover',

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import MovieDetailsScreen from '../screens/MovieDetailsScreen/MovieDetailsScreen';
 import FavoritesScreen from '../screens/FavoritesScreen/FavoritesScreen';
@@ -8,6 +7,7 @@ import SearchScreen from '../screens/SearchScreen/SearchScreen';
 import AuthScreen from '../screens/AuthScreen/AuthScreen';
 
 import { COLORS } from '../shared/constants/colors';
+import { THEMES } from '../shared/constants/themes';
 
 const Stack = createStackNavigator();
 
@@ -21,14 +21,12 @@ const DETAILS_TITLE = 'YOKINO';
 const detailScreenConfigure = {
   title: DETAILS_TITLE,
   headerShown: false,
-  headerBackImage: () => (
-    <Icon color='orange' size={46} name='ios-arrow-back' type='ionicon' />
-  ),
 };
 const WrappStackNavigator: React.FC<Props> = ({ children, name }) => {
   return (
     <Stack.Navigator
       headerMode='float'
+      mode='modal'
       screenOptions={{
         headerTintColor: 'white',
         headerTitleStyle: {
@@ -36,6 +34,7 @@ const WrappStackNavigator: React.FC<Props> = ({ children, name }) => {
         },
         headerStyle: {
           backgroundColor: COLORS.MAIN_COLOR,
+          height: THEMES.HEADER_SIZE,
         },
       }}
       initialRouteName={name}>

@@ -3,12 +3,8 @@ import { COLORS } from '../../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    flex: 1,
     backgroundColor: COLORS.MAIN_COLOR,
-  },
-  bgImg: {
-    width: '100%',
-    height: '100%',
   },
   headerBtns: {
     flexDirection: 'row',

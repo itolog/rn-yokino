@@ -172,6 +172,7 @@ type UsersDto {
 
 input MailInput {
     from: String!
+    id: String!
     name: String!
     text: String!
 }

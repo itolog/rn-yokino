@@ -47,6 +47,7 @@ const AuthScreen = memo(() => {
         },
         headerStyle: {
           backgroundColor: COLORS.DANGER_COLOR,
+          height: THEMES.HEADER_SIZE,
         },
       });
     } else {
@@ -57,6 +58,7 @@ const AuthScreen = memo(() => {
         },
         headerStyle: {
           backgroundColor: COLORS.MAIN_COLOR,
+          height: THEMES.HEADER_SIZE,
         },
       });
     }

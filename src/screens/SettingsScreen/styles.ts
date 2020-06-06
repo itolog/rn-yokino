@@ -1,9 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { COLORS } from '../../shared/constants/colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: Dimensions.get('window').height,
+    minHeight: '100%',
   },
   cardStyle: {
     backgroundColor: COLORS.MAIN_COLOR,

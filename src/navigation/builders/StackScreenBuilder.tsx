@@ -75,7 +75,7 @@ const StackScreenBuilder: React.FC<Props> = memo(
           component={component}
           options={({ navigation }) => ({
             title: `${screenTitle}`,
-            headerLeft: () => auth(),
+            headerLeft: auth,
             headerRight: () => (
               <AppHeaderButton
                 color={COLORS.MENU_COLOR}

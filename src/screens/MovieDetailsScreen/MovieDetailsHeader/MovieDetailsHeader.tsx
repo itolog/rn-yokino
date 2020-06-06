@@ -4,6 +4,7 @@ import { Icon } from 'react-native-elements';
 // @ts-ignore
 import TextTicker from 'react-native-text-ticker';
 import { COLORS } from '../../../shared/constants/colors';
+import { THEMES } from '../../../shared/constants/themes';
 
 interface Props {
   backHandler: () => void;
@@ -17,7 +18,7 @@ const titleStyle = {
 
 const styles = StyleSheet.create({
   container: {
-    // height: THEMES.HEADER_SIZE,
+    height: THEMES.HEADER_SIZE,
     backgroundColor: COLORS.MAIN_COLOR,
     flexDirection: 'row',
     alignItems: 'center',

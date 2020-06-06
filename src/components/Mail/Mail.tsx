@@ -48,6 +48,7 @@ const Mail = memo(() => {
       sendMail({
         variables: {
           input: {
+            id: user?.id,
             from: user?.email,
             name: user?.name,
             text: message.trim(),
