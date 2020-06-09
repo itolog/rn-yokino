@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Text, View, ActivityIndicator } from 'react-native';
 import { Icon, Image } from 'react-native-elements';
 import { MovieInfo } from '../../shared/generated/graphql';
@@ -10,55 +9,31 @@ import styles from './styles';
 
 import IsEmpty from '../../shared/components/IsEmpty/IsEmpty';
 // store
-import { AppState } from '../../store/createStore';
 import {
   getFavoriteMoviesIds,
   getErrorFavorites,
 } from '../../store/favorites-movies/selectors';
 import { Actions } from '../../store/favorites-movies/actions';
 
-import { Favorites } from '../../shared/interface/favorites';
-
-interface IProps {
+interface Props {
   data: MovieInfo;
   children: React.ReactElement | React.ReactElement[];
 }
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    favoriteMoviesIds: getFavoriteMoviesIds(state),
-    errorFavorites: getErrorFavorites(state),
-  };
-};
+const VideoInfo: React.FC<Props> = memo(({ data, children }) => {
+  // store
+  const favoriteMoviesIds = useSelector(getFavoriteMoviesIds);
+  const errorFavorites = useSelector(getErrorFavorites);
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadDB: () => dispatch(Actions.loadFavorite()),
-  saveMovie: (payload: Favorites) =>
-    dispatch(Actions.saveFavoriteMovie(payload)),
-  removeMovie: (payload: number) =>
-    dispatch(Actions.removeFavoriteMovie(payload)),
-});
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  IProps;
-
-const VideoInfo: React.FC<Props> = ({
-  data,
-  saveMovie,
-  loadDB,
-  removeMovie,
-  favoriteMoviesIds,
-  errorFavorites,
-  children,
-}) => {
+  const dispatch = useDispatch();
+  // local state
   const [favorites, setFavorites] = useState(false);
 
   const poster = data?.poster!;
 
   useEffect(() => {
-    loadDB();
-  }, [loadDB]);
+    dispatch(Actions.loadFavorite());
+  }, [dispatch]);
 
   useEffect(() => {
     // @ts-ignore
@@ -74,7 +49,7 @@ const VideoInfo: React.FC<Props> = ({
           id: data.id,
           poster: data.poster,
         };
-        saveMovie(payload);
+        dispatch(Actions.saveFavoriteMovie(payload));
       }
     });
   };
@@ -82,7 +57,7 @@ const VideoInfo: React.FC<Props> = ({
   const removeFavorites = () => {
     requestAnimationFrame(() => {
       if (data.id) {
-        removeMovie(data.id);
+        dispatch(Actions.removeFavoriteMovie(data.id));
       }
     });
   };
@@ -239,6 +214,6 @@ const VideoInfo: React.FC<Props> = ({
       </IsEmpty>
     </View>
   );
-};
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(VideoInfo);
+export default VideoInfo;

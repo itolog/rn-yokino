@@ -87,7 +87,7 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
       return <ErrorBox msg={error?.message} />;
     }
     return (
-      <ScrollView ref={ref}>
+      <ScrollView removeClippedSubviews={true} ref={ref}>
         {!loading ? (
           <>
             <MovieDetailsHeader
