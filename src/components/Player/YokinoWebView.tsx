@@ -5,7 +5,6 @@ import {
   ProgressBarAndroid,
   Platform,
   ProgressViewIOS,
-  InteractionManager,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { WebViewProgressEvent } from 'react-native-webview/lib/WebViewTypes';
@@ -53,10 +52,10 @@ const YokinoWebView: React.FC<Props> = memo(({ src }) => {
 
   const handleOnLoad = (event: WebViewProgressEvent) => {
     const { nativeEvent } = event;
-    InteractionManager.runAfterInteractions(() => {
-      setProgress(nativeEvent.progress);
-    });
+
+    setProgress(nativeEvent.progress);
   };
+
   return (
     <View>
       <View style={styles.wrappProgress}>

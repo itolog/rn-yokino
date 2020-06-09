@@ -1,7 +1,6 @@
 import React, { memo, useRef, useState, useEffect } from 'react';
 import {
   ScrollView,
-  SafeAreaView,
   FlatList,
   Text,
   View,
@@ -61,9 +60,7 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
   };
 
   const handleBack = () => {
-    requestAnimationFrame(() => {
-      navigation.goBack();
-    });
+    navigation.goBack();
   };
 
   useEffect(() => {
@@ -87,7 +84,10 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
       return <ErrorBox msg={error?.message} />;
     }
     return (
-      <ScrollView removeClippedSubviews={true} ref={ref}>
+      <ScrollView
+        removeClippedSubviews={true}
+        ref={ref}
+        style={styles.container}>
         {!loading ? (
           <>
             <MovieDetailsHeader
@@ -119,10 +119,10 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
     );
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <>
       <StatusBar hidden={isStatusBarHide} translucent={isStatusBarHide} />
       {content()}
-    </SafeAreaView>
+    </>
   );
 });
 
