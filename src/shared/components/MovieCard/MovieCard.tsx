@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { Text, View, TouchableHighlight } from 'react-native';
 
@@ -17,7 +17,7 @@ interface Props {
   quality?: string;
 }
 
-const MovieCard = React.memo(
+const MovieCard = memo(
   ({ poster, id, title, year, kp, imdb, quality }: Props) => {
     const navigation = useNavigation();
     const toDetails = () => {

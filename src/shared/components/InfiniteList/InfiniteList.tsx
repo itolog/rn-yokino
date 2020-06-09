@@ -1,4 +1,10 @@
-import React, { useState, useLayoutEffect, useCallback, useRef } from 'react';
+import React, {
+  useState,
+  useLayoutEffect,
+  useCallback,
+  useRef,
+  memo,
+} from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -43,7 +49,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const InfiniteList: React.FC<Props> = React.memo(
+const InfiniteList: React.FC<Props> = memo(
   ({ data, loading, refresh, loadMore, nextPageUrl }) => {
     const flatRef = useRef<FlatList<any>>(null);
     const [dataMovie, setDataMovie] = useState(data);

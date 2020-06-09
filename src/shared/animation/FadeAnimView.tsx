@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Animated, Dimensions, Easing } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../store/createStore';
@@ -9,7 +9,7 @@ interface Props {
   children: JSX.Element[] | JSX.Element;
 }
 
-const FadeAnimView: React.FC<Props> = React.memo(({ children }) => {
+const FadeAnimView: React.FC<Props> = memo(({ children }) => {
   const [fadeAnim] = useState(new Animated.Value(0));
   const isHide = useSelector(
     (state: AppState) => state.animState.isHeaderVisible,

@@ -33,7 +33,9 @@ const Mail = memo(() => {
   const [sendMail, { loading }] = useMutation(SEND_MAIL);
 
   const toggleModal = () => {
-    setModalVisible(!modalVisible);
+    requestAnimationFrame(() => {
+      setModalVisible(!modalVisible);
+    });
   };
 
   const toAuth = () => {

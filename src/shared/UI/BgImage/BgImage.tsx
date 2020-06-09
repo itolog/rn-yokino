@@ -1,9 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ImageBackground, StyleSheet } from 'react-native';
 
 // STORE
-import { AppState } from '../../../store/createStore';
 import { getImagePath } from '../../../store/settings/selectors';
 
 const styles = StyleSheet.create({
@@ -15,17 +14,12 @@ const styles = StyleSheet.create({
   },
 });
 
-interface IProps {
+interface Props {
   children: JSX.Element[] | JSX.Element;
 }
 
-const mapStateToProps = (state: AppState) => ({
-  image: getImagePath(state),
-});
-
-type Props = ReturnType<typeof mapStateToProps> & IProps;
-
-const BgImage: React.FC<Props> = React.memo(({ children, image }) => {
+const BgImage: React.FC<Props> = React.memo(({ children }) => {
+  const image = useSelector(getImagePath);
   return (
     <ImageBackground
       source={{ uri: image }}
@@ -36,4 +30,4 @@ const BgImage: React.FC<Props> = React.memo(({ children, image }) => {
   );
 });
 
-export default connect(mapStateToProps)(BgImage);
+export default BgImage;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
 
@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const ErrorBox: React.FC<Props> = ({ msg }) => {
+const ErrorBox: React.FC<Props> = memo(({ msg }) => {
   return (
     <Card title='Ошибка' containerStyle={styles.container}>
       <Text>{msg}</Text>
     </Card>
   );
-};
+});
 export default ErrorBox;

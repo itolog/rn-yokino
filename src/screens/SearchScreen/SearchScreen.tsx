@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FlatList, Text } from 'react-native';
 import { Card } from 'react-native-elements';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@apollo/react-hooks';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
-import styles from './styles';
 import BgImage from '../../shared/UI/BgImage/BgImage';
 import Loader from '../../shared/UI/Loader/Loader';
 import MovieCard from '../../shared/components/MovieCard/MovieCard';
@@ -18,12 +16,9 @@ type RootStackParamList = {
 };
 type SearchScreenRouteProp = RouteProp<RootStackParamList, 'Search'>;
 
-interface Props {
-  route: SearchScreenRouteProp;
-}
-
-const SearchScreen: React.FC<Props> = ({ route }) => {
-  const search = route.params?.search;
+const SearchScreen = memo(() => {
+  const route = useRoute<SearchScreenRouteProp>();
+  const { search } = route.params;
 
   const { loading, error, data } = useQuery(SEARCH, {
     variables: { title: search },
@@ -61,24 +56,22 @@ const SearchScreen: React.FC<Props> = ({ route }) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BgImage>
-        <FlatList
-          data={movies}
-          getItemLayout={getItemLayout}
-          renderItem={renderItem}
-          keyExtractor={(item: any) => item.id.toString()}
-          numColumns={1}
-          removeClippedSubviews={true}
-          maxToRenderPerBatch={8}
-          updateCellsBatchingPeriod={40}
-          initialNumToRender={6}
-          windowSize={11}
-          ListEmptyComponent={emptyList}
-        />
-      </BgImage>
-    </SafeAreaView>
+    <BgImage>
+      <FlatList
+        data={movies}
+        getItemLayout={getItemLayout}
+        renderItem={renderItem}
+        keyExtractor={(item: any) => item.id.toString()}
+        numColumns={1}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={8}
+        updateCellsBatchingPeriod={40}
+        initialNumToRender={6}
+        windowSize={11}
+        ListEmptyComponent={emptyList}
+      />
+    </BgImage>
   );
-};
+});
 
 export default SearchScreen;

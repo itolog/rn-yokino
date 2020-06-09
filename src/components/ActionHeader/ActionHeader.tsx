@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +9,7 @@ interface Props {
   setPreferences: () => void;
 }
 
-const ActionHeader: React.FC<Props> = ({ setPreferences }) => {
+const ActionHeader: React.FC<Props> = memo(({ setPreferences }) => {
   const navigation = useNavigation();
 
   const togglePreferences = () => {
@@ -19,14 +19,10 @@ const ActionHeader: React.FC<Props> = ({ setPreferences }) => {
   };
 
   const navigateToFavorite = () => {
-    requestAnimationFrame(() => {
-      navigation.navigate('Favorites');
-    });
+    navigation.navigate('Favorites');
   };
   const navigateToSettings = () => {
-    requestAnimationFrame(() => {
-      navigation.navigate('Settings');
-    });
+    navigation.navigate('Settings');
   };
 
   return (
@@ -52,6 +48,6 @@ const ActionHeader: React.FC<Props> = ({ setPreferences }) => {
       />
     </View>
   );
-};
+});
 
 export default ActionHeader;

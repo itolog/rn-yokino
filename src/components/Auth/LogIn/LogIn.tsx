@@ -32,8 +32,8 @@ const LogIn: React.FC<Props> = memo(({ setError }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const loginCompleate = async ({ login }: { login: UserLoginDto }) => {
-    await navigation.navigate('Films');
+  const loginCompleate = ({ login }: { login: UserLoginDto }) => {
+    navigation.navigate('Films');
     dispatch(Actions.setUser(login));
   };
 

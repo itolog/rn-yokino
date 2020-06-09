@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import { ItemValue } from '@react-native-community/picker/typings/Picker';
@@ -26,9 +26,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const GenrePicker: React.FC<Props> = ({ movieGenre, setMovieGenre }) => {
+const GenrePicker: React.FC<Props> = memo(({ movieGenre, setMovieGenre }) => {
   const handleValueChange = (item: ItemValue) => {
-    setMovieGenre(Number(item));
+    requestAnimationFrame(() => {
+      setMovieGenre(Number(item));
+    });
   };
   return (
     <View style={styles.container}>
@@ -48,6 +50,6 @@ const GenrePicker: React.FC<Props> = ({ movieGenre, setMovieGenre }) => {
       </Picker>
     </View>
   );
-};
+});
 
 export default GenrePicker;

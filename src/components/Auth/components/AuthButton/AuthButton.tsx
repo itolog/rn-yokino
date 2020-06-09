@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -7,7 +7,7 @@ interface Props {
   onSubmit: () => void;
 }
 
-const AuthButton: React.FC<Props> = ({ loading, onSubmit }) => {
+const AuthButton: React.FC<Props> = memo(({ loading, onSubmit }) => {
   return (
     <Button
       disabled={loading}
@@ -16,6 +16,6 @@ const AuthButton: React.FC<Props> = ({ loading, onSubmit }) => {
       icon={<Icon name='send' size={40} color='white' />}
     />
   );
-};
+});
 
 export default AuthButton;

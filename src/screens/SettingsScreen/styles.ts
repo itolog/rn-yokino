@@ -3,7 +3,6 @@ import { COLORS } from '../../shared/constants/colors';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     height: Dimensions.get('window').height,
     minHeight: '100%',
   },

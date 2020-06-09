@@ -8,7 +8,7 @@ import {
   Dimensions,
   ScaledSize,
 } from 'react-native';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 
 import MovieDetailsHeader from './MovieDetailsHeader/MovieDetailsHeader';
@@ -27,11 +27,8 @@ type RootStackParamList = {
 };
 type DetailsScreenRouteProp = RouteProp<RootStackParamList, 'Details'>;
 
-interface Props {
-  route: DetailsScreenRouteProp;
-}
-
-const MovieDetailsScreen = memo(({ route }: Props) => {
+const MovieDetailsScreen = memo(() => {
+  const route = useRoute<DetailsScreenRouteProp>();
   const navigation = useNavigation();
 
   const [isStatusBarHide, setIsStatusBarHide] = useState(false);
@@ -84,10 +81,7 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
       return <ErrorBox msg={error?.message} />;
     }
     return (
-      <ScrollView
-        removeClippedSubviews={true}
-        ref={ref}
-        style={styles.container}>
+      <ScrollView removeClippedSubviews={true} ref={ref}>
         {!loading ? (
           <>
             <MovieDetailsHeader
@@ -119,10 +113,10 @@ const MovieDetailsScreen = memo(({ route }: Props) => {
     );
   };
   return (
-    <>
+    <View style={styles.container}>
       <StatusBar hidden={isStatusBarHide} translucent={isStatusBarHide} />
       {content()}
-    </>
+    </View>
   );
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 // @ts-ignore
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const MovieDetailsHeader: React.FC<Props> = ({ backHandler, title }) => {
+const MovieDetailsHeader: React.FC<Props> = memo(({ backHandler, title }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.leftIcon} onPress={backHandler}>
@@ -69,6 +69,6 @@ const MovieDetailsHeader: React.FC<Props> = ({ backHandler, title }) => {
       </View>
     </View>
   );
-};
+});
 
 export default MovieDetailsHeader;

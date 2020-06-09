@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, StyleSheet, View, ActivityIndicator } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
 import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { useQuery } from '@apollo/react-hooks';
 import { GET_MOVIE } from '../../screens/MovieDetailsScreen/ggl';
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
   pressBtn: { backgroundColor: COLORS.BUTTON_PARTS },
 });
 
-const PartsCard: React.FC<Props> = ({ id, scrollTop }) => {
+const PartsCard: React.FC<Props> = memo(({ id, scrollTop }) => {
   const navigation = useNavigation();
 
   const { loading, error, data } = useQuery(GET_MOVIE, {
@@ -57,12 +56,11 @@ const PartsCard: React.FC<Props> = ({ id, scrollTop }) => {
       />
       <Button
         onPress={handlePress}
-        // icon={<Icon name='eye' size={30} color={COLORS.MENU_COLOR} />}
         buttonStyle={styles.pressBtn}
         title='перейти'
       />
     </View>
   );
-};
+});
 
 export default PartsCard;

@@ -20,7 +20,6 @@ import { REEGISTRATION } from './gql';
 import { UserLoginDto } from '../../../shared/generated/graphql';
 
 // STORE
-// STORE
 import { Actions } from '../../../store/user/actions';
 import { LOGIN } from '../LogIn/gql';
 
@@ -35,9 +34,9 @@ const Registration: React.FC<Props> = memo(({ setError }) => {
   const [nameUser, setNameUser] = useState<string>();
 
   // Login after registration
-  const loginCompleate = async ({ login }: { login: UserLoginDto }) => {
+  const loginCompleate = ({ login }: { login: UserLoginDto }) => {
     dispatch(Actions.setUser(login));
-    await navigation.navigate('Films');
+    navigation.navigate('Films');
   };
   const [getLoginState] = useLazyQuery(LOGIN, {
     onCompleted: loginCompleate,

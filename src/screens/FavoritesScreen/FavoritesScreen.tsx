@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import React, { useEffect, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
 import { Card, Button, Icon } from 'react-native-elements';
@@ -10,7 +8,6 @@ import styles from './styles';
 
 import ErrorOverlay from '../../shared/components/ErrorOverlay/ErrorOverlay';
 // store
-import { AppState } from '../../store/createStore';
 import { Actions } from '../../store/favorites-movies/actions';
 import {
   getFavoritesMovies,
@@ -25,30 +22,17 @@ interface Favorite {
   title: string;
 }
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    favorites: getFavoritesMovies(state),
-    errorFavorites: getErrorFavorites(state),
-  };
-};
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadDB: () => dispatch(Actions.loadFavorite()),
-  removeItems: (id: number) => dispatch(Actions.removeFavoriteMovie(id)),
-});
+const FavoritesScreen = memo(() => {
+  // Store
+  const favorites = useSelector(getFavoritesMovies);
+  const errorFavorites = useSelector(getErrorFavorites);
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
-const FavoritesScreen = ({
-  loadDB,
-  removeItems,
-  favorites,
-  errorFavorites,
-}: Props) => {
+  const dispatch = useDispatch();
+  // Navigation
   const navigation = useNavigation();
   useEffect(() => {
-    loadDB();
-  }, [favorites, loadDB]);
+    dispatch(Actions.loadFavorite());
+  }, [favorites, dispatch]);
 
   const emptyList = () => {
     return (
@@ -59,24 +43,30 @@ const FavoritesScreen = ({
   };
 
   const toDetails = (id: number) => {
-    requestAnimationFrame(() => {
-      navigation.navigate('Details', { id });
-    });
+    navigation.navigate('Details', { id });
   };
 
   const renderItem = ({ item }: { item: Favorite }) => {
+    const removeFavorite = () => {
+      dispatch(Actions.removeFavoriteMovie(item.id));
+    };
+
+    const navigateToDetails = () => {
+      toDetails(item.id);
+    };
+
     return (
       <Card title={item.title} image={{ uri: item.poster }}>
         <View style={styles.btns}>
           <Button
             icon={<Icon name='delete' color='#ffffff' />}
             buttonStyle={styles.delete}
-            onPress={() => removeItems(item.id)}
+            onPress={removeFavorite}
           />
           <Button
             icon={<Icon name='eye' color='#ffffff' type='font-awesome' />}
             buttonStyle={styles.see}
-            onPress={() => toDetails(item.id)}
+            onPress={navigateToDetails}
           />
         </View>
       </Card>
@@ -84,7 +74,7 @@ const FavoritesScreen = ({
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <BgImage>
         {/*  ErrorOverlay */}
         <ErrorOverlay
@@ -106,8 +96,8 @@ const FavoritesScreen = ({
           ListEmptyComponent={emptyList}
         />
       </BgImage>
-    </SafeAreaView>
+    </View>
   );
-};
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(FavoritesScreen);
+export default FavoritesScreen;

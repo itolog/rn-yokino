@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import React, { useState, useEffect, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Alert,
   TouchableOpacity,
@@ -8,8 +7,6 @@ import {
   ScrollView,
 } from 'react-native';
 import { Card, Button, Icon } from 'react-native-elements';
-
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from './styles';
@@ -24,29 +21,14 @@ import {
   getImagePathError,
 } from '../../store/settings/selectors';
 import { Actions as settingsActions } from '../../store/settings/actions';
-import { AppState } from '../../store/createStore';
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    imagePath: getImagePath(state),
-    imagePathError: getImagePathError(state),
-  };
-};
+const SettingsScreen = memo(() => {
+  // STORE
+  const imagePath = useSelector(getImagePath);
+  const imagePathError = useSelector(getImagePathError);
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  saveImage: (payload: string) => dispatch(settingsActions.setImgPath(payload)),
-  resetImage: () => dispatch(settingsActions.resetImagePath()),
-});
-
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
-
-const SettingsScreen = ({
-  saveImage,
-  imagePathError,
-  imagePath,
-  resetImage,
-}: Props) => {
+  const dispatch = useDispatch();
+  // local state
   const [loacalImg, setLocalImg] = useState<string>(imagePath);
 
   useEffect(() => {
@@ -55,13 +37,13 @@ const SettingsScreen = ({
 
   const saveImageHandler = () => {
     requestAnimationFrame(() => {
-      saveImage(loacalImg);
+      dispatch(settingsActions.setImgPath(loacalImg));
     });
   };
 
   const resetImageHandler = () => {
     requestAnimationFrame(() => {
-      resetImage();
+      dispatch(settingsActions.resetImagePath());
     });
   };
 
@@ -83,48 +65,44 @@ const SettingsScreen = ({
   };
 
   return (
-    <ScrollView>
-      <SafeAreaView style={styles.container}>
-        <BgImage>
-          {/*  ErrorOverlay */}
-          <ErrorOverlay
-            visible={!!imagePathError}
-            message={imagePathError!}
-            locationError='экран SettingsScreen.tsx'
-          />
+    <ScrollView contentContainerStyle={styles.container}>
+      <BgImage>
+        {/*  ErrorOverlay */}
+        <ErrorOverlay
+          visible={!!imagePathError}
+          message={imagePathError!}
+          locationError='экран SettingsScreen.tsx'
+        />
 
-          <Card
-            titleStyle={styles.cardStyleTitle}
-            containerStyle={styles.cardStyle}
-            title='Сменить фон'>
-            <ImageBackground
-              source={{ uri: loacalImg }}
-              style={styles.cardBtns}>
-              <TouchableOpacity onPress={resetImageHandler}>
-                <Icon name='delete-forever' reverse size={25} color='#c71585' />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={pickImageHandler}>
-                <Icon
-                  name='ios-image'
-                  reverse
-                  type='ionicon'
-                  size={25}
-                  color='#000080'
-                />
-              </TouchableOpacity>
-            </ImageBackground>
-            <Button
-              onPress={saveImageHandler}
-              buttonStyle={styles.btnSave}
-              icon={<Icon name='save' color='white' />}
-            />
-          </Card>
-          {/* MAIL SEND  */}
-          <Mail />
-        </BgImage>
-      </SafeAreaView>
+        <Card
+          titleStyle={styles.cardStyleTitle}
+          containerStyle={styles.cardStyle}
+          title='Сменить фон'>
+          <ImageBackground source={{ uri: loacalImg }} style={styles.cardBtns}>
+            <TouchableOpacity onPress={resetImageHandler}>
+              <Icon name='delete-forever' reverse size={25} color='#c71585' />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={pickImageHandler}>
+              <Icon
+                name='ios-image'
+                reverse
+                type='ionicon'
+                size={25}
+                color='#000080'
+              />
+            </TouchableOpacity>
+          </ImageBackground>
+          <Button
+            onPress={saveImageHandler}
+            buttonStyle={styles.btnSave}
+            icon={<Icon name='save' color='white' />}
+          />
+        </Card>
+        {/* MAIL SEND  */}
+        <Mail />
+      </BgImage>
     </ScrollView>
   );
-};
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
+export default SettingsScreen;

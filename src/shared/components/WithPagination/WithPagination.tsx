@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View, SafeAreaView } from 'react-native';
+import React, { useCallback, useEffect, useState, memo } from 'react';
+import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar, Card, Icon } from 'react-native-elements';
 
@@ -28,7 +28,7 @@ interface Props {
   type: MediaTypes;
 }
 
-const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
+const WithPagination: React.FC<Props> = memo(({ ggl, type }) => {
   const navigation = useNavigation();
   // LOCAL STATE
 
@@ -49,7 +49,10 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
   });
 
   let mediaData: Movies = data?.movies;
-
+  /**
+   * TODO
+   * move switch to separate file maybe create useHook
+   */
   switch (type) {
     case MediaTypes.FILMS: {
       mediaData = data?.movies;
@@ -129,7 +132,7 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
   const toNextPage = async () => {
     const next = nextPage + 1;
     if (mediaData?.next_page) {
-      await setNextPage(next);
+      setNextPage(next);
       await fetchMore({
         variables: {
           page: next,
@@ -141,7 +144,6 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
           return fetchMoreResult;
         },
       });
-      //
     }
   };
 
@@ -157,15 +159,17 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
     setPreferences(false);
   };
 
-  const refreshMovieList = async () => {
+  const refreshMovieList = () => {
     setNextPage(1);
-    await refetch().then(res => {
+    refetch().then(res => {
       mediaData = res.data;
     });
   };
 
-  const updateSearch = async (searchText: string) => {
-    setSearch(searchText);
+  const updateSearch = (searchText: string) => {
+    requestAnimationFrame(() => {
+      setSearch(searchText);
+    });
   };
 
   const onSubmit = () => {
@@ -182,7 +186,7 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <BgImage>
         {/* HEADER NAV */}
         <ActionHeader setPreferences={togglePreferences} />
@@ -214,7 +218,7 @@ const WithPagination: React.FC<Props> = React.memo(({ ggl, type }) => {
           loadMore={toNextPage}
         />
       </BgImage>
-    </SafeAreaView>
+    </View>
   );
 });
 
