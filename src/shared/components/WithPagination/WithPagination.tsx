@@ -167,9 +167,7 @@ const WithPagination: React.FC<Props> = memo(({ ggl, type }) => {
   };
 
   const updateSearch = (searchText: string) => {
-    requestAnimationFrame(() => {
-      setSearch(searchText);
-    });
+    setSearch(searchText);
   };
 
   const onSubmit = () => {

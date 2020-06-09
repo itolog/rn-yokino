@@ -12,6 +12,7 @@ import config from './src/shared/config';
 // STORE
 import { ActionTypes } from './src/store/settings/actions';
 import { ActionTypes as userActionTypes } from './src/store/user/actions';
+import { ActionTypes as aplicationActionsType } from './src/store/aplication/actions';
 
 enableScreens();
 
@@ -28,9 +29,14 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    bootstrap().then(() => {
-      dispatch({ type: ActionTypes.GET_IMG_PATH });
-    });
+    bootstrap()
+      .then(() => {
+        dispatch({ type: ActionTypes.GET_IMG_PATH });
+      })
+      .then(() => {
+        // Swich SplashScreen when All services INIT(Database)
+        dispatch({ type: aplicationActionsType.APP_INIT });
+      });
   }, [dispatch]);
 
   return (

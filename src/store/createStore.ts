@@ -2,6 +2,8 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { ActionType, StateType } from 'typesafe-actions';
 
+// COMMON APLICATION STATE
+import { reducer as appReducer } from './aplication/reducer';
 // import NetInfo
 import { ActionTypeUnion as NetInfoActionType } from './netinfo/actions';
 import { reducer as netInfoReducer } from './netinfo/reducer';
@@ -46,6 +48,7 @@ const reducer = combineReducers({
   animState: animationReducer,
   header: headerReducer,
   user: userReducer,
+  application: appReducer,
 });
 
 export type RootActions = ActionType<
