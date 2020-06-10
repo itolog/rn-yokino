@@ -22,18 +22,19 @@ const detailScreenConfigure = {
   title: DETAILS_TITLE,
   headerShown: false,
 };
+
 const WrappStackNavigator: React.FC<Props> = ({ children, name }) => {
   return (
     <Stack.Navigator
       headerMode='float'
       mode='modal'
       screenOptions={{
-        headerTintColor: 'white',
+        headerTintColor: COLORS.MAIN_COLOR,
         headerTitleStyle: {
           fontSize: 18,
         },
         headerStyle: {
-          backgroundColor: COLORS.MAIN_COLOR,
+          backgroundColor: 'white',
           height: THEMES.HEADER_SIZE,
         },
       }}

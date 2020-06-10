@@ -56,8 +56,10 @@ const AuthScreen = memo(() => {
         headerTitleStyle: {
           fontSize: 18,
         },
+        headerTintColor: COLORS.MAIN_COLOR,
         headerStyle: {
-          backgroundColor: COLORS.MAIN_COLOR,
+          backgroundColor: 'white',
+
           height: THEMES.HEADER_SIZE,
         },
       });
